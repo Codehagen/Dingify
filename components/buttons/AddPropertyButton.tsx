@@ -61,7 +61,7 @@ export function AddPropertyButton() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="default" disabled={isLoading}>
-          Add new property
+          Placeholder Button
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
