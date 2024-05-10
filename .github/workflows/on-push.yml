@@ -1,0 +1,63 @@
+name: on-push
+
+on: ["push"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  ci:
+    name: 🔁 ci
+
+    runs-on: ubuntu-latest
+
+    env:
+      NEXTAUTH_SECRET: ignore
+      GOOGLE_CLIENT_ID: ignore
+      GOOGLE_CLIENT_SECRET: ignore
+      GITHUB_OAUTH_TOKEN: ignore
+      DATABASE_URL: http://example.com
+      RESEND_API_KEY: ignore
+      TEST_EMAIL_ADDRESS: noreply@example.com
+      STRIPE_API_KEY: ignore
+      STRIPE_WEBHOOK_SECRET: ignore
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID: ignore
+      NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID: ignore
+      NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID: ignore
+      NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID: ignore
+      EDGE_STORE_ACCESS_KEY: ignore
+      EDGE_STORE_SECRET_KEY: ignore
+
+    steps:
+      - name: 🔸 Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        uses: pnpm/action-setup@v2.1.1
+        with:
+          version: 7.9.0 # Specify the pnpm version you are using
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: 🦄 Format
+        run: pnpm format:check || true # ignore errors for now
+
+      - name: 🎨 Lint
+        run: pnpm lint
+
+      - name: 👷‍♂️ Build
+        run: pnpm build
