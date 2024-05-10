@@ -13,11 +13,12 @@ jobs:
   ci:
     name: 🔁 ci
 
-    runs-on: ubuntu-latest
+    runs-on:
+      labels: ubuntu-latest
 
     env:
       NEXTAUTH_SECRET: ignore
-      GOOGLE_CLIENT_ID: ignore
+      GOOGLE_CLIENT_ID: ignore,
       GOOGLE_CLIENT_SECRET: ignore
       GITHUB_OAUTH_TOKEN: ignore
       DATABASE_URL: http://example.com
@@ -38,7 +39,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -46,18 +46,13 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v2.1.1
-        with:
-          version: 7.9.0 # Specify the pnpm version you are using
-
-      - name: Install dependencies
-        run: pnpm install
+        run: yarn
 
       - name: 🦄 Format
-        run: pnpm format:check || true # ignore errors for now
+        run: yarn format:check || true # ignore errors for now
 
       - name: 🎨 Lint
-        run: pnpm lint
+        run: yarn lint
 
       - name: 👷‍♂️ Build
-        run: pnpm build
+        run: yarn build
