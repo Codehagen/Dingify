@@ -10,6 +10,8 @@ export default [
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs["core-web-vitals"].rules,
+      "@next/next/no-duplicate-head": "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   },
 ];
