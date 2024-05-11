@@ -6,6 +6,11 @@
     "name": "Christer",
     "url": "https://twitter.com/Codehagen"
   },
+  "engines": {
+    "node": "20.10.0"
+  },
+  "packageManager": "pnpm@8.15.5",
+  "prettier": "@dingify/prettier-config",
   "scripts": {
     "dev": "next dev",
     "build": "contentlayer build && next build",
@@ -102,6 +107,11 @@
     "zustand": "^4.4.5"
   },
   "devDependencies": {
+    "@dingify/prettier-config": "workspace:*",
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.2",
+    "typescript": "^5.4.5",
+
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
@@ -119,7 +129,6 @@
     "husky": "^8.0.3",
     "mdast-util-toc": "^7.0.0",
     "postcss": "^8.4.31",
-    "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.7",
     "pretty-quick": "^3.1.3",
     "prisma": "^5.5.2",
@@ -130,7 +139,6 @@
     "remark": "^15.0.1",
     "remark-gfm": "^3.0.1",
     "tailwindcss": "^3.3.5",
-    "typescript": "5.2.2",
     "unist-util-visit": "^5.0.0"
   }
 }
