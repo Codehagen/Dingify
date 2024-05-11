@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { Button } from "@/components/ui/button";
+import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import { LanugageButton } from "@/components/buttons/LanguageButton";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -50,7 +51,7 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Properties" text="See all your properties.">
+      <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
         {userCredits.success && availableCredits > 0 ? (
           <AddPropertyButton />
         ) : (
@@ -64,16 +65,15 @@ export default async function DashboardPage() {
           // Render EmptyPlaceholder if there are no properties
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>
-              No properties created
-            </EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>There is no events</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You dont have any properties yet.
+              You need to generate a API key first
             </EmptyPlaceholder.Description>
             {/* <Link href="/property" passHref className="mb-4">
               <Button variant="outline">Add your first property</Button>
             </Link> */}
-            <LanugageButton userId={user.id} />
+            {/* <LanugageButton userId={user.id} /> */}
+            <AddApiKeyButton />
           </EmptyPlaceholder>
         ) : (
           // Render PropertiesTable if there are properties
