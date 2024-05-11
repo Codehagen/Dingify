@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserCredits } from "@/actions/get-credits";
+import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import { LanugageButton } from "@/components/buttons/LanguageButton";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -9,11 +10,11 @@ import PropertiesTable from "@/components/properties/Propertiestable";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import { columns, Payment } from "@/components/table/dashboard/columns";
 import { DataTable } from "@/components/table/dashboard/data-table";
+import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
 
 import { prisma } from "@dingify/db";
-import { Button } from "@dingify/ui/components/button";
 
 export const metadata = {
   title: "Dingify Dashboard - Your Alerts Overview",
@@ -50,7 +51,7 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Properties" text="See all your properties.">
+      <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
         {userCredits.success && availableCredits > 0 ? (
           <AddPropertyButton />
         ) : (
@@ -64,16 +65,15 @@ export default async function DashboardPage() {
           // Render EmptyPlaceholder if there are no properties
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>
-              No properties created
-            </EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>There is no events</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You dont have any properties yet.
+              You need to generate a API key first
             </EmptyPlaceholder.Description>
             {/* <Link href="/property" passHref className="mb-4">
               <Button variant="outline">Add your first property</Button>
             </Link> */}
-            <LanugageButton userId={user.id} />
+            {/* <LanugageButton userId={user.id} /> */}
+            <AddApiKeyButton />
           </EmptyPlaceholder>
         ) : (
           // Render PropertiesTable if there are properties
