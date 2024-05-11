@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+
+import { Button } from "@dingify/ui/components/button";
 import {
   Dialog,
   DialogContent,
@@ -11,16 +12,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@dingify/ui/components/dialog";
+import { Input } from "@dingify/ui/components/input";
+import { Label } from "@dingify/ui/components/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@dingify/ui/components/select";
 
 export function AddApiKeyButton() {
   const [address, setAddress] = useState("");
