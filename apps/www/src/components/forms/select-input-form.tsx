@@ -8,23 +8,22 @@ import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { toast } from "@dingify/ui/components/use-toast";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import {
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormLabel,
-} from "../ui/form";
-import { Switch } from "../ui/switch";
+} from "@dingify/ui/components//form";
+import { Switch } from "@dingify/ui/components//switch";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@dingify/ui/components/card";
+import { toast } from "@dingify/ui/components/use-toast";
 
 export function SelectInputForm({ options, image }) {
   const router = useRouter();

@@ -1,14 +1,15 @@
 import React from "react";
 
-import GenerateDescriptionButton2 from "../buttons/GenerateDescriptionButton2";
-import NoTextPlaceholder from "../properties/NoTextPlaceholder";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@dingify/ui/components/card";
+
+import GenerateDescriptionButton2 from "../buttons/GenerateDescriptionButton2";
+import NoTextPlaceholder from "../properties/NoTextPlaceholder";
 
 const DescriptionDisplay = ({
   descriptionData,
@@ -33,7 +34,7 @@ const DescriptionDisplay = ({
   } catch (error) {
     console.error(
       `Error parsing description data for property ID ${propertyId}:`,
-      error,
+      error
     );
 
     // Render a user-friendly error message with a retry option

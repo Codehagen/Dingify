@@ -7,9 +7,10 @@ import { Loader2 as Spinner } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { useToast } from "@dingify/ui/components/use-toast";
-
-import { Button } from "../ui/button";
+import { Input } from "@dingify/ui/components//input";
+import { Label } from "@dingify/ui/components//label";
+import { Textarea } from "@dingify/ui/components//textarea";
+import { Button } from "@dingify/ui/components/button";
 import {
   Card,
   CardContent,
@@ -17,10 +18,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
+} from "@dingify/ui/components/card";
+import { useToast } from "@dingify/ui/components/use-toast";
 
 // Define your schema as per your requirements
 const propertyFormSchema = z.object({

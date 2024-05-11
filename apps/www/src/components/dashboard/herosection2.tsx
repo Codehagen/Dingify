@@ -4,16 +4,17 @@ import Link from "next/link";
 import { getGreeting } from "@/lib/utils";
 import Balancer from "react-wrap-balancer";
 
-import { cn } from "../../lib/utils";
-import { GetStartedButton } from "../buttons/GetStartedButton";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@dingify/ui/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@dingify/ui/components/card";
+
+import { cn } from "../../lib/utils";
+import { GetStartedButton } from "../buttons/GetStartedButton";
 import SalesFunnelChart from "./charts/SalesFunnelChart";
 
 export default function HeroSection2() {

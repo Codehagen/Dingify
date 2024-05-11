@@ -5,6 +5,7 @@ import { updateUserLanguage } from "@/actions/update-language";
 import { Modal } from "@/components/shared/modal";
 import { useLanguageModal } from "@/hooks/use-language-modal";
 
+import { Button } from "@dingify/ui/components/button";
 import {
   Select,
   SelectContent,
@@ -14,8 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@dingify/ui/components/select";
-
-import { Button } from "../ui/button";
 
 // Add any additional imports for user feedback or styling
 
