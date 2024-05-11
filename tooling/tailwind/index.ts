@@ -1,3 +1,6 @@
+// @ts-nocheck
+// TODO: The tailwind.d.ts declaration file isn't recognized by apps that consume this file
+
 import type { Config } from "tailwindcss";
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette"
 import { fontFamily } from "tailwindcss/defaultTheme";
