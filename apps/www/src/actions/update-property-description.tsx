@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/db";
+import { prisma } from "@dingify/db";
 
 export async function updatePropertyDescription(propertyId, description) {
   console.log(

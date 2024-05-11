@@ -1,9 +1,10 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { getServerSession } from "next-auth";
+
+import { prisma } from "@dingify/db";
 
 import { generateOptions } from "./generate-options";
 

@@ -10,9 +10,9 @@ import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import { columns, Payment } from "@/components/table/dashboard/columns";
 import { DataTable } from "@/components/table/dashboard/data-table";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
+import { prisma } from "@dingify/db";
 import { Button } from "@dingify/ui/components/button";
 
 export const metadata = {

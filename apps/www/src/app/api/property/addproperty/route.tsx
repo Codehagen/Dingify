@@ -2,8 +2,9 @@ import type { NextRequest } from "next/server";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getUserCredits } from "@/actions/get-credits";
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+
+import { prisma } from "@dingify/db";
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();

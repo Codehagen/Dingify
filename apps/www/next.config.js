@@ -21,9 +21,6 @@ const config = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
-  },
 
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@dingify/db", "@dingify/ui"],

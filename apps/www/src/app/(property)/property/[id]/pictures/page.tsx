@@ -4,8 +4,8 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
 import PropertyImageWithOptions from "@/components/properties/PropertyImageWithOptions";
-import { prisma } from "@/lib/db";
 
+import { prisma } from "@dingify/db";
 import { Button } from "@dingify/ui/components/button";
 
 const MAX_PHOTOS = 20; // Set the maximum number of photos allowed

@@ -1,7 +1,8 @@
 // actions/generate-options.js
 
-import { prisma } from "@/lib/db";
 import axios from "axios";
+
+import { prisma } from "@dingify/db";
 
 export const maxDuration = 50;
 

@@ -6,7 +6,8 @@ import { InputRightSideTest } from "@/components/dashboard/test";
 import { UpdatePropertyForm2 } from "@/components/dashboard/updatepropertyform2";
 import { UpdatePropertyForm } from "@/components/forms/update-property-form";
 import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
-import { prisma } from "@/lib/db";
+
+import { prisma } from "@dingify/db";
 
 export const metadata = {
   title: "Property Details - Propwrite Dashboard",
@@ -23,8 +24,7 @@ export default async function PropertyPage({
 }) {
   const propertyId = params.id;
   const propertyData = await getPropertyData();
-  const hasPhotos =
-    propertyData && propertyData.images && propertyData.images.length > 0;
+  const hasPhotos = propertyData?.images && propertyData.images.length > 0;
 
   async function getPropertyData() {
     try {

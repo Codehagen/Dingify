@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/db";
+import { prisma } from "@dingify/db";
 
 export async function updatePropertyStatus(propertyId, newStatus) {
   if (!propertyId || !newStatus) {

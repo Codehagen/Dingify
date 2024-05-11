@@ -1,8 +1,9 @@
 // actions/get-user-credits.js
 "use server";
 
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+
+import { prisma } from "@dingify/db";
 
 export async function getUserCredits() {
   const user = await getCurrentUser();

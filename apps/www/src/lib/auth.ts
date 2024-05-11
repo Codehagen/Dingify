@@ -3,10 +3,11 @@ import sendOnboardingEmail from "@/actions/send-onboarding-email";
 import { siteConfig } from "@/config/site";
 import MagicLinkEmail from "@/emails/magic-link-email";
 import { env } from "@/env";
-import { prisma } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
+
+import { prisma } from "@dingify/db";
 
 import { resend } from "./email";
 

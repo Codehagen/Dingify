@@ -2,8 +2,9 @@
 
 // src/utils/sendOnboardingEmail.ts
 import WelcomeEmail from "@/emails/welcome-email";
-import { prisma } from "@/lib/db";
 import { resend } from "@/lib/email";
+
+import { prisma } from "@dingify/db";
 
 async function sendOnboardingEmail(email: string, name: string) {
   try {

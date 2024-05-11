@@ -2,9 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { userNameSchema } from "@/lib/validations/user";
 import { getServerSession } from "next-auth";
+
+import { prisma } from "@dingify/db";
 
 export interface FormData {
   name: string;

@@ -1,7 +1,7 @@
 // actions/select-option.js
 "use server";
 
-import { prisma } from "@/lib/db";
+import { prisma } from "@dingify/db";
 
 export async function selectOption(imageId, selectedOptionKey) {
   console.log(

@@ -1,8 +1,9 @@
 import type Stripe from "stripe";
 import { headers } from "next/headers";
 import { env } from "@/env";
-import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+
+import { prisma } from "@dingify/db";
 
 export async function POST(req: Request) {
   const body = await req.text();

@@ -1,8 +1,9 @@
 // actions/update-user-language.js
 "use server";
 
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+
+import { prisma } from "@dingify/db";
 
 export async function updateUserLanguage(language) {
   const user = await getCurrentUser();
