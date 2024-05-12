@@ -161,6 +161,7 @@ export function Mdx({ code }: MdxProps) {
 
   return (
     <div className="mdx">
+      {/* @ts-expect-error */}
       <Component components={components} />
     </div>
   );

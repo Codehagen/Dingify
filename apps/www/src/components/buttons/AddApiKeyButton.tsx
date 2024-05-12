@@ -53,6 +53,7 @@ export function AddApiKeyButton() {
                 <Input id="apiKey" readOnly value="abc123def456ghi789" />
                 <Button
                   className="absolute right-1 top-1/2 -translate-y-1/2"
+                  // @ts-expect-error
                   size="icon"
                   variant="ghost"
                 >

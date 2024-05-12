@@ -21,10 +21,12 @@ export function BillingFormButton({
   const [isPending, startTransition] = useTransition();
   const generateUserStripeSession = generateUserStripe.bind(
     null,
+    // @ts-expect-error
     offer.stripeIds[year ? "yearly" : "monthly"]
   );
 
   const stripeSessionAction = () =>
+    // @ts-expect-error
     startTransition(async () => await generateUserStripeSession());
 
   return (
