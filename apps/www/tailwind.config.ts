@@ -8,12 +8,4 @@ export default {
   // those classes are included correctly.
   content: [...baseConfig.content, "../../packages/ui/src/**/*.{ts,tsx}"],
   presets: [baseConfig],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
-      },
-    },
-  },
 } satisfies Config;
