@@ -39,6 +39,20 @@ export default function SalesFunnelChart(props) {
         direction="horizontal"
         valueFormat=">-.4s"
         colors={{ scheme: "nivo" }}
+        theme={{
+          tooltip: {
+            chip: {
+              borderRadius: "9999px",
+            },
+            container: {
+              fontSize: "12px",
+              textTransform: "capitalize",
+              borderRadius: "6px",
+              background: "#000000",
+              color: "#ffffff",
+            },
+          },
+        }}
         borderWidth={20}
         borderColor={{ from: "color", modifiers: [] }}
         labelColor={{
