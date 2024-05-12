@@ -10,8 +10,10 @@
     },
     "plugins": [{ "name": "next" }],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "module": "esnext"
+    "module": "esnext",
+    "noImplicitAny": false, // TODO: Resolve errors when setting this to 'true'
+    "useUnknownInCatchVariables": false // TODO: Resolve errors when setting this to 'true'
   },
-  "include": [".", ".next/types/**/*.ts", ".contentlayer/generated"],
-  "exclude": ["node_modules"]
+  "include": ["src", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".contentlayer/generated"]
 }

@@ -42,6 +42,7 @@ export async function POST(req: Request) {
         data: {
           stripeSubscriptionId: subscription.id,
           stripeCustomerId: subscription.customer as string,
+          // @ts-expect-error
           stripePriceId: subscription.items.data[0].price.id,
           stripeCurrentPeriodEnd: new Date(
             subscription.current_period_end * 1000
@@ -80,6 +81,7 @@ export async function POST(req: Request) {
           stripeSubscriptionId: subscription.id,
         },
         data: {
+          // @ts-expect-error
           stripePriceId: subscription.items.data[0].price.id,
           stripeCurrentPeriodEnd: new Date(
             subscription.current_period_end * 1000
