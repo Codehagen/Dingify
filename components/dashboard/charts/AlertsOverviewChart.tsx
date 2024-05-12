@@ -74,6 +74,8 @@ export default function AlertsOverviewChart(props) {
               fontSize: "12px",
               textTransform: "capitalize",
               borderRadius: "6px",
+              background: "#000000",
+              color: "#ffffff",
             },
           },
           grid: {
