@@ -23,7 +23,7 @@ const config = {
   },
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@dingify/db", "@dingify/ui"],
+  transpilePackages: ["@dingify/db", "@dingify/ui", "@dingify/db"],
 
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
