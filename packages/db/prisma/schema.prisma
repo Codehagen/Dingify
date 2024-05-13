@@ -43,19 +43,20 @@ model Session {
 }
 
 model User {
-  id                  String     @id @default(cuid())
-  name                String?
-  email               String?    @unique
-  emailVerified       DateTime?
-  credits             Int        @default(3)
-  image               String?
-  language            String?    @default("english")
-  onboardingEmailSent Boolean    @default(false)
-  createdAt           DateTime   @default(now()) @map(name: "created_at")
-  updatedAt           DateTime   @default(now()) @map(name: "updated_at")
-  accounts            Account[]
-  sessions            Session[]
-  properties          Property[]
+  id                   String                @id @default(cuid())
+  name                 String?
+  email                String?               @unique
+  emailVerified        DateTime?
+  credits              Int                   @default(3)
+  image                String?
+  language             String?               @default("english")
+  onboardingEmailSent  Boolean               @default(false)
+  createdAt            DateTime              @default(now()) @map(name: "created_at")
+  updatedAt            DateTime              @default(now()) @map(name: "updated_at")
+  accounts             Account[]
+  sessions             Session[]
+  projects             Project[]
+  notificationSettings NotificationSetting[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -74,82 +75,58 @@ model VerificationToken {
   @@map(name: "verification_tokens")
 }
 
-enum PropertyStatus {
-  NOT_STARTED
-  IN_PROGRESS
-  DONE
-  CANCELED
+model Project {
+  id        String    @id @default(cuid())
+  name      String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  channels  Channel[]
+  createdAt DateTime  @default(now())
+
+  @@map(name: "projects")
 }
 
-enum PropertyLabel {
-  APARTMENT
-  HOUSE
-  CABIN
-  PROPERTY
+model Channel {
+  id        String   @id @default(cuid())
+  name      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  events    Event[]
+  createdAt DateTime @default(now())
+
+  @@map(name: "channels")
 }
 
-model Property {
-  id                   String         @id @default(cuid())
-  address              String
-  description          String? // Optional field
-  status               PropertyStatus @default(NOT_STARTED)
-  label                PropertyLabel  @default(PROPERTY)
-  detailedDescription  String?        @db.Text
-  p_rom                Int? // Optional field
-  bra                  Int? // Optional field
-  bra_i                Int? // Optional field
-  bra_b                Int? // Optional field
-  bra_e                Int? // Optional field
-  soverom              Int? // Optional field
-  pris                 Int? // Optional field
-  takst_text           String? // Optional field
-  titleHolder          String? // Hjemmelshaver
-  postalCode           String? // Postnummer
-  cadastralNumber      Int? // Gnr
-  propertyUnitNumber   Int? // Bnr
-  sectionNumber        Int? // Seksjonsnummer
-  shareNumber          Int? // Andelsnr
-  leaseholdNumber      Int? // Festenr
-  municipalityNumber   Int? // Kommunenummer
-  yearBuilt            Int? // Byggeår
-  title                String? //Title for eiendommen
-  city                 String? // Poststed
-  regulation           String? // Regulering
-  insurance            String? // Forsikring
-  analysisDate         DateTime? // Analysedato
-  assessedValue        String? // Ligningsverdi
-  concessionObligation String? // Konsesjonsplikt
-  client               String? // Oppdragsgiver
-  water                String? // Vann
-  access               String? // Adkomst
-  sewage               String? // Avløp
-  publicCharge         String? // Offentlig avgift
-  plotSize             String? // Tomtestørrelse
-  otherParticipants    String? // Andre tilstede
-  images               Image[]
-  user                 User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId               String
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
+model Event {
+  id        String   @id @default(cuid())
+  name      String
+  channelId String
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  userId    String
+  icon      String
+  notify    Boolean
+  tags      Json
+  createdAt DateTime @default(now())
 
-  @@index([userId]) // Add this index
-  @@map(name: "properties")
+  @@map(name: "events")
 }
 
-model Image {
-  id             String   @id @default(cuid())
-  url            String
-  description    String?
-  option1        String?  @db.VarChar(500)
-  option2        String?  @db.VarChar(500)
-  option3        String?  @db.VarChar(500)
-  selectedOption String?  @db.VarChar(500)
-  retryCount     Int      @default(0)
-  property       Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  propertyId     String
+model NotificationSetting {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+  type      NotificationType @default(DISCORD)
+  details   Json // Details like webhook URL, mobile number, etc.
+  enabled   Boolean          @default(true)
+  createdAt DateTime         @default(now())
 
-  @@index([propertyId]) // Add this index
-  @@map(name: "images")
+  @@map(name: "notification_settings")
+}
+
+enum NotificationType {
+  DISCORD
+  SLACK
+  MOBILE
 }
 
 //if we need full reset :  npx prisma db push --force-reset

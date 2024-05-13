@@ -24,6 +24,7 @@
     "db:migrate:reset": "pnpm with-env prisma migrate reset",
     "db:migrate:deploy": "pnpm with-env prisma migrate deploy",
     "db:studio": "pnpm with-env prisma studio",
+    "db:force": "pnpm with-env prisma db push --force-reset",
     "postinstall": "pnpm db:generate"
   },
   "dependencies": {
