@@ -28,6 +28,7 @@ Dingify is a monorepo managed by [Turborepo](https://turbo.build/repo). The mono
     .
     ├── apps                         # Its app workspace which contains
     │    ├── www                     # Nextjs app which is deployed in Vercel
+    │    ├── api                     # Hono app that is our REST-api for our SDK
     │    └── ...
     ├── packages                     # are the shared packages that are used by the apps 
     │    ├── db                      # Prisma DB connector
