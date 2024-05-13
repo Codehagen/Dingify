@@ -21,6 +21,25 @@
 
 Welcome to Dingify, where we're we are going to make your alerts easy for you
 
+## Directory Structure
+
+Dingify is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
+
+    .
+    ├── apps                         # Its app workspace which contains
+    │    ├── www                     # Nextjs app which is deployed in Vercel
+    │    └── ...
+    ├── packages                     # are the shared packages that are used by the apps 
+    │    ├── db                      # Prisma DB connector
+    │    └── ui                      # Shared UI components (Shadcn)
+    ├── tooling                      # are the shared configuration that are used by the apps and packages
+    │    ├── eslint                  # Shared eslint presets
+    │    ├── prettier                # Shared prettier configuration
+    │    ├── tailwind                # Shared tailwind configuration
+    │    └── typescript              # Shared tsconfig you can extend from
+    ├── LICENSE
+    └── README.md
+
 ## Installation
 
 Clone & create this repo locally with the following command:
