@@ -11,9 +11,11 @@
   },
   "scripts": {
     "dev": "wrangler dev src/index.ts",
+    "build": "tsc",
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
+    "@dingify/db": "workspace:*",
     "hono": "^4.3.6"
   },
   "devDependencies": {
