@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@dingify/db": "workspace:*",
+    "@dingify/api": "workspace:*",
     "@dingify/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.9.2",
     "next": "^14.2.0",
