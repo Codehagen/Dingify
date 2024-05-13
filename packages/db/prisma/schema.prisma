@@ -49,6 +49,7 @@ model User {
   emailVerified        DateTime?
   credits              Int                   @default(3)
   image                String?
+  language             String?               @default("english")
   onboardingEmailSent  Boolean               @default(false)
   createdAt            DateTime              @default(now()) @map(name: "created_at")
   updatedAt            DateTime              @default(now()) @map(name: "updated_at")
