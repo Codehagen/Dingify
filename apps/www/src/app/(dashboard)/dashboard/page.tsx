@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserCredits } from "@/actions/get-credits";
+
+import { prisma } from "@dingify/db";
+import { Button } from "@dingify/ui/components/button";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import { LanugageButton } from "@/components/buttons/LanguageButton";
@@ -10,11 +16,6 @@ import PropertiesTable from "@/components/properties/Propertiestable";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import { columns, Payment } from "@/components/table/dashboard/columns";
 import { DataTable } from "@/components/table/dashboard/data-table";
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
-
-import { prisma } from "@dingify/db";
-import { Button } from "@dingify/ui/components/button";
 
 export const metadata = {
   title: "Dingify Dashboard - Your Alerts Overview",
@@ -30,21 +31,20 @@ export default async function DashboardPage() {
     redirect(authOptions.pages?.signIn || "/login");
   }
 
-  const properties = await prisma.property.findMany({
-    where: {
-      userId: user.id,
-    },
-    select: {
-      id: true,
-      address: true,
-      createdAt: true,
-      status: true,
-      label: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  // const properties = await prisma.event.findMany({
+  //   where: {
+  //     userId: user.id,
+  //   },
+  //   select: {
+  //     id: true,
+  //     createdAt: true,
+  //   },
+  //   orderBy: {
+  //     createdAt: "desc",
+  //   },
+  // });
+
+  const properties = [1];
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
@@ -76,8 +76,8 @@ export default async function DashboardPage() {
             <AddApiKeyButton />
           </EmptyPlaceholder>
         ) : (
-          // Render PropertiesTable if there are properties
-          <DataTable columns={columns} data={properties} />
+          // Render EventsTable if there are Events
+          <p>Place EventsTable HERE!</p>
           // <PropertiesTable properties={properties} />
         )}
       </div>
