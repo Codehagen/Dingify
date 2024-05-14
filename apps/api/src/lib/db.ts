@@ -1,7 +1,5 @@
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { Pool } from "@neondatabase/serverless";
 import type { Env } from "../env";
-import { PrismaClient } from "@dingify/db";
+import { PrismaClient, PrismaNeon, Pool } from "@dingify/db";
 
 const pool = (env: Env) =>
   new Pool({ connectionString: env.CONNECTION_STRING });

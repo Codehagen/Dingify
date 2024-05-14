@@ -38,12 +38,6 @@ importers:
       '@hono/zod-openapi':
         specifier: ^0.11.0
         version: 0.11.0(hono@4.3.6)(zod@3.23.4)
-      '@neondatabase/serverless':
-        specifier: ^0.9.3
-        version: 0.9.3
-      '@prisma/adapter-neon':
-        specifier: ^5.13.0
-        version: 5.13.0(@neondatabase/serverless@0.9.3)
       hono:
         specifier: ^4.3.6
         version: 4.3.6
@@ -289,6 +283,12 @@ importers:
 
   packages/db:
     dependencies:
+      '@neondatabase/serverless':
+        specifier: ^0.9.3
+        version: 0.9.3
+      '@prisma/adapter-neon':
+        specifier: ^5.13.0
+        version: 5.13.0(@neondatabase/serverless@0.9.3)
       '@prisma/client':
         specifier: ^5.12.1
         version: 5.13.0(prisma@5.13.0)
