@@ -33,11 +33,9 @@ app.use("/api/*", async (c, next) => {
   return next();
 });
 
-/*
 // Routes //
 app.route("/api/users", users);
 app.route("/api/projects", projects);
 app.route("/api/channels", channels);
 app.route("/api/events", events);
-*/
 export default app;

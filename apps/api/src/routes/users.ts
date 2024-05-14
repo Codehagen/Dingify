@@ -1,13 +1,15 @@
 // users.ts
-import { PrismaClient } from "@prisma/client/edge";
 import { Hono } from "hono";
 
 import { generateApiKey } from "../lib/generateApiKey";
 import { parsePrismaError } from "../lib/parsePrismaError";
 import { UserSchema } from "../zod";
+import { Env } from "../env";
+import { prisma } from "../lib/db";
 
-const prisma = new PrismaClient();
-const users = new Hono();
+const users = new Hono<{
+  Bindings: Env;
+}>();
 
 // POST - Create User
 users.post("/", async (c) => {
@@ -24,7 +26,7 @@ users.post("/", async (c) => {
   const apiKey = generateApiKey();
 
   try {
-    const user = await prisma.user.upsert({
+    const user = await prisma(c.env).user.upsert({
       where: { email },
       update: { name, plan },
       create: { email, name: name || "", plan: plan || "", apiKey },
@@ -45,7 +47,7 @@ users.post("/", async (c) => {
 // GET - List all users
 users.get("/", async (c) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma(c.env).user.findMany();
     return c.json({ ok: true, users });
   } catch (error: any) {
     return c.json(

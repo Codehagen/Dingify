@@ -1,10 +1,11 @@
 // projects.ts
 import { Hono } from "hono";
-import { PrismaClient } from "@prisma/client/edge";
-// import { CreateProjectRequest } from "../validators";
+import { Env } from "../env";
+import { prisma } from "../lib/db";
 
-const prisma = new PrismaClient();
-const projects = new Hono();
+const projects = new Hono<{
+  Bindings: Env;
+}>();
 
 projects.post("/", async (c) => {
   const apiKey = c.req.header("x-api-key");
@@ -12,7 +13,7 @@ projects.post("/", async (c) => {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -29,13 +30,13 @@ projects.post("/", async (c) => {
         message: "Invalid project data",
         errors: result.error.issues,
       },
-      400
+      400,
     );
   }
 
   const { name } = result.data;
 
-  const projectExists = await prisma.project.findFirst({
+  const projectExists = await prisma(c.env).project.findFirst({
     where: {
       name,
       userId: user.id,
@@ -45,11 +46,11 @@ projects.post("/", async (c) => {
   if (projectExists) {
     return c.json(
       { ok: false, message: "Project with this name already exists" },
-      409
+      409,
     );
   }
 
-  const project = await prisma.project.create({
+  const project = await prisma(c.env).project.create({
     data: {
       name,
       userId: user.id,
@@ -65,7 +66,7 @@ projects.get("/", async (c) => {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -73,7 +74,7 @@ projects.get("/", async (c) => {
     return c.json({ ok: false, message: "Invalid API key" }, 401);
   }
 
-  const projects = await prisma.project.findMany({
+  const projects = await prisma(c.env).project.findMany({
     where: {
       userId: user.id,
     },

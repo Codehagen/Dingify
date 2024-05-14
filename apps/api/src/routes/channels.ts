@@ -1,9 +1,10 @@
-// channels.ts
 import { Hono } from "hono";
-import { PrismaClient } from "@prisma/client/edge";
+import { Env } from "../env";
+import { prisma } from "../lib/db";
 
-const prisma = new PrismaClient();
-const channels = new Hono();
+const channels = new Hono<{
+  Bindings: Env;
+}>();
 
 channels.post("/", async (c) => {
   const apiKey = c.req.header("x-api-key");
@@ -11,7 +12,7 @@ channels.post("/", async (c) => {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -25,7 +26,7 @@ channels.post("/", async (c) => {
     return c.json({ ok: false, message: "Project name is required" }, 400);
   }
 
-  const projectExists = await prisma.project.findFirst({
+  const projectExists = await prisma(c.env).project.findFirst({
     where: {
       name: project,
       userId: user.id,
@@ -38,11 +39,11 @@ channels.post("/", async (c) => {
         ok: false,
         message: "Project not found or does not belong to the user",
       },
-      404
+      404,
     );
   }
 
-  const channelExists = await prisma.channel.findFirst({
+  const channelExists = await prisma(c.env).channel.findFirst({
     where: {
       name,
       projectId: projectExists.id,
@@ -55,11 +56,11 @@ channels.post("/", async (c) => {
         ok: false,
         message: "Channel with this name already exists in the project",
       },
-      409
+      409,
     );
   }
 
-  const channel = await prisma.channel.create({
+  const channel = await prisma(c.env).channel.create({
     data: {
       name,
       projectId: projectExists.id,
@@ -75,7 +76,7 @@ channels.get("/", async (c) => {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -83,7 +84,7 @@ channels.get("/", async (c) => {
     return c.json({ ok: false, message: "Invalid API key" }, 401);
   }
 
-  const projects = await prisma.project.findMany({
+  const projects = await prisma(c.env).project.findMany({
     where: { userId: user.id },
     select: { id: true },
   });
@@ -91,19 +92,19 @@ channels.get("/", async (c) => {
   if (!projects || projects.length === 0) {
     return c.json(
       { ok: false, message: "No projects found for the user" },
-      404
+      404,
     );
   }
 
   const projectIds = projects.map((project) => project.id);
-  const channels = await prisma.channel.findMany({
+  const channels = await prisma(c.env).channel.findMany({
     where: { projectId: { in: projectIds } },
   });
 
   if (!channels || channels.length === 0) {
     return c.json(
       { ok: false, message: "No channels found for the user's projects" },
-      404
+      404,
     );
   }
 

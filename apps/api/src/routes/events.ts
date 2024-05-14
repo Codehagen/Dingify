@@ -1,12 +1,14 @@
 // events.ts
 import { Hono } from "hono";
-import { PrismaClient } from "@prisma/client/edge";
 import { sendDiscordNotification } from "../notifications/discord/sendDiscordNotification";
 import { parsePrismaError } from "../lib/parsePrismaError";
 import { EventSchema } from "../validators";
+import { Env } from "../env";
+import { prisma } from "../lib/db";
 
-const prisma = new PrismaClient();
-const events = new Hono();
+const events = new Hono<{
+  Bindings: Env;
+}>();
 
 events.post("/", async (c) => {
   const apiKey = c.req.header("x-api-key");
@@ -15,7 +17,7 @@ events.post("/", async (c) => {
   }
 
   // Find user by API key
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -30,7 +32,7 @@ events.post("/", async (c) => {
     const { channel, name, icon, notify, tags } = eventData;
 
     // Find the channel by name instead of ID
-    const project = await prisma.project.findFirst({
+    const project = await prisma(c.env).project.findFirst({
       where: {
         userId: user.id,
       },
@@ -42,11 +44,11 @@ events.post("/", async (c) => {
           message:
             "No projects found for this user. Ensure the user has projects created.",
         },
-        404
+        404,
       );
     }
 
-    const channelExists = await prisma.channel.findFirst({
+    const channelExists = await prisma(c.env).channel.findFirst({
       where: {
         name: channel,
         projectId: project.id,
@@ -59,7 +61,7 @@ events.post("/", async (c) => {
           message:
             "No channel found with the provided channel name. You need to add it on the website",
         },
-        404
+        404,
       );
     }
 
@@ -69,12 +71,12 @@ events.post("/", async (c) => {
           message:
             "No channel found with the provided channel name. You need to add it on the website",
         },
-        404
+        404,
       );
     }
 
     // Create the event
-    const savedEvent = await prisma.event.create({
+    const savedEvent = await prisma(c.env).event.create({
       data: {
         name: name || "",
         channelId: channelExists.id,
@@ -95,7 +97,7 @@ events.post("/", async (c) => {
         message: "Failed to log event",
         error: parsePrismaError(error),
       },
-      400
+      400,
     );
   }
 });
@@ -106,7 +108,7 @@ events.get("/", async (c) => {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
 
@@ -115,7 +117,7 @@ events.get("/", async (c) => {
   }
 
   try {
-    const events = await prisma.event.findMany({
+    const events = await prisma(c.env).event.findMany({
       where: {
         userId: user.id,
       },
@@ -128,7 +130,7 @@ events.get("/", async (c) => {
         message: "Failed to retrieve events",
         error: error.message || "Unknown error",
       },
-      500
+      500,
     ); // Sending a 500 Internal Server Error status code
   }
 });
