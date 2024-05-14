@@ -21,12 +21,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@dingify/ui/components/tooltip";
+import { useToast } from "@dingify/ui/components/use-toast";
 
 export function AddApiKeyButton() {
   const [apiKey, setApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
   const [showKey, setShowKey] = useState(false);
+  const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
@@ -44,12 +46,30 @@ export function AddApiKeyButton() {
 
     if (response.success) {
       setApiKey(response.apiKey as string);
+      toast({
+        title: "API Key Generated",
+        description: "Your new API key has been generated successfully.",
+      });
     } else {
-      // Handle error (e.g., show a notification)
       console.error(response.error);
+      toast({
+        title: "Error",
+        description: "There was an error generating the API key.",
+        variant: "destructive",
+      });
     }
 
     setIsLoading(false);
+  };
+
+  const handleCopy = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(apiKey);
+    setHasCopied(true);
+    toast({
+      title: "Copied",
+      description: "API key has been copied to clipboard.",
+    });
   };
 
   return (
@@ -97,11 +117,7 @@ export function AddApiKeyButton() {
                     <Button
                       className="absolute right-2 top-1/2 -translate-y-1/2"
                       variant="ghost"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigator.clipboard.writeText(apiKey);
-                        setHasCopied(true);
-                      }}
+                      onClick={handleCopy}
                     >
                       {hasCopied ? (
                         <CheckIcon className="h-4 w-4" />
@@ -122,7 +138,7 @@ export function AddApiKeyButton() {
               disabled={isLoading}
               className="w-full sm:w-auto"
             >
-              {isLoading ? "Saving..." : "Create API key"}
+              {isLoading ? "Loading..." : "Create API key"}
             </Button>
           </DialogFooter>
         </form>
