@@ -49,8 +49,8 @@ model User {
   name                 String?
   email                String?               @unique
   emailVerified        DateTime?
-  apiKey               String                @unique
-  plan                 String
+  apiKey               String?               @unique
+  plan                 String                @default("basic")
   credits              Int                   @default(3)
   image                String?
   language             String?               @default("english")
