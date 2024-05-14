@@ -44,7 +44,7 @@ export default async function DashboardPage() {
   //   },
   // });
 
-  const properties = [1];
+  const properties = [];
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
