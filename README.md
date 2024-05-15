@@ -67,6 +67,7 @@ cp .env.example .env.local
    2. Create [Stripe](https://stripe.com) Account
    3. Create [Google Console](https://console.cloud.google.com/) Account
    4. Create [Resend](https://resend.com/) Account
+   5. Create [Unkey](https://unkey.com) Account
 
 5. Start the development server from either yarn or turbo:
 
@@ -89,6 +90,7 @@ pnpm dev
 - [Vercel](https://vercel.com/) – Easily preview & deploy changes with git
 - [PlanetScale](https://planetscale.com/) – A cutting-edge database platform for seamless, scalable data management
 - [Resend](https://resend.com/) – A powerful email framework for streamlined email development
+- [Unkey](https://unkey.dev) – API key management for developers
 
 ## Contributing
 
