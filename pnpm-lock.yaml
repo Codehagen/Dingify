@@ -17,6 +17,9 @@ importers:
       '@dingify/prettier-config':
         specifier: workspace:*
         version: link:tooling/prettier
+      '@unkey/api':
+        specifier: ^0.20.2
+        version: 0.20.2
       husky:
         specifier: ^8.0.3
         version: 8.0.3
@@ -282,7 +285,7 @@ importers:
         version: 5.13.0(prisma@5.13.0)
       '@t3-oss/env-core':
         specifier: ^0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.23.8)
     devDependencies:
       '@dingify/eslint-config':
         specifier: workspace:*
@@ -4468,6 +4471,19 @@ packages:
       zod: 3.22.4
     dev: false
 
+  /@t3-oss/env-core@0.9.2(typescript@5.4.5)(zod@3.23.8):
+    resolution: {integrity: sha512-KgWXljUTHgO3o7GMZQPAD5+P+HqpauMNNHowlm7V2b9IeMitSUpNKwG6xQrup/xARWHTdxRVIl0mSI4wCevQhQ==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.4.5
+      zod: 3.23.8
+    dev: false
+
   /@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.22.4):
     resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
     peerDependencies:
@@ -4897,14 +4913,12 @@ packages:
     resolution: {integrity: sha512-KOdwz6vreOkHQDqjAogcjyFZfA0NJc7QjufYyM40yuN1yGyn8G7M85T16UqBadB1DFmTMyMlm5phneH46LjeQQ==}
     dependencies:
       '@unkey/rbac': 0.1.12
-    dev: false
 
   /@unkey/error@0.0.2:
     resolution: {integrity: sha512-E4/2PClLeZ/X9nGUqe36xy/tX2KFwBsOrqCMZbG3mscAUsHtnjSLzV8xa9TVQlfH4tXt2mfgAqxLqEwr1ayZDA==}
     dependencies:
       zod: 3.23.8
       zod-error: 1.5.0
-    dev: false
 
   /@unkey/rbac@0.1.12:
     resolution: {integrity: sha512-eXuvqrDtp3DpdxS6Zej6zDR/vj9u0c399NhXrmXwBsQh3a+fb6xsfNm7FFK8AcLTNd4dMc7N3EbizKnjqSx8kg==}
@@ -4912,7 +4926,6 @@ packages:
       '@unkey/error': 0.0.2
       zod: 3.23.8
       zod-error: 1.5.0
-    dev: false
 
   /@vercel/analytics@1.1.1:
     resolution: {integrity: sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==}
@@ -12513,14 +12526,12 @@ packages:
     resolution: {integrity: sha512-zzopKZ/skI9iXpqCEPj+iLCKl9b88E43ehcU+sbRoHuwGd9F1IDVGQ70TyO6kmfiRL1g4IXkjsXK+g1gLYl4WQ==}
     dependencies:
       zod: 3.23.8
-    dev: false
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
   /zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
-    dev: false
 
   /zustand@4.4.5(@types/react@18.3.2)(react@18.2.0):
     resolution: {integrity: sha512-jgIrBBLKncQW74PA2Lclct3gwD4aPughwGE4FqlXrv3rDqQox7JCn8rwUiFK6ygJcbBAvfTf8fF+ICg7HLD2FQ==}
