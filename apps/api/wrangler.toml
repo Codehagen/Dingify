@@ -1,8 +1,10 @@
 name = "api"
-compatibility_date = "2023-12-01"
+compatibility_date = "2023-12-28"
+main = "src/index.ts"
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+MY_VAR = "my-variable"
+DATABASE_URL = "postgresql://dingifydb_owner:PBWhkEDlSX48@ep-bold-firefly-a2fqjg1p.eu-central-1.aws.neon.tech/dingifydb?sslmode=require"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

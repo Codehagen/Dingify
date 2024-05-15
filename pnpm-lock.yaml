@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -31,16 +35,25 @@ importers:
       '@dingify/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@hono/zod-openapi':
+        specifier: ^0.11.0
+        version: 0.11.0(hono@4.3.6)(zod@3.23.4)
       hono:
         specifier: ^4.3.6
         version: 4.3.6
+      zod:
+        specifier: ^3.23.4
+        version: 3.23.4
+      zod-openapi:
+        specifier: ^2.17.0
+        version: 2.17.0(zod@3.23.4)
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20240403.0
         version: 4.20240403.0
       wrangler:
-        specifier: ^3.47.0
-        version: 3.47.0(@cloudflare/workers-types@4.20240403.0)
+        specifier: ^3.54.0
+        version: 3.55.0(@cloudflare/workers-types@4.20240403.0)
 
   apps/www:
     dependencies:
@@ -79,7 +92,7 @@ importers:
         version: 0.0.6(react@18.2.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.23.4)
       '@tanstack/react-table':
         specifier: ^8.10.7
         version: 8.10.7(react-dom@18.2.0)(react@18.2.0)
@@ -195,8 +208,8 @@ importers:
         specifier: ^0.7.7
         version: 0.7.7(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.2.0)(react@18.2.0)
       zod:
-        specifier: ^3.22.4
-        version: 3.22.4
+        specifier: ^3.23.4
+        version: 3.23.4
       zustand:
         specifier: ^4.4.5
         version: 4.4.5(@types/react@18.3.2)(react@18.2.0)
@@ -270,12 +283,18 @@ importers:
 
   packages/db:
     dependencies:
+      '@neondatabase/serverless':
+        specifier: ^0.9.3
+        version: 0.9.3
+      '@prisma/adapter-neon':
+        specifier: ^5.13.0
+        version: 5.13.0(@neondatabase/serverless@0.9.3)
       '@prisma/client':
         specifier: ^5.12.1
         version: 5.13.0(prisma@5.13.0)
       '@t3-oss/env-core':
         specifier: ^0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4)
+        version: 0.9.2(typescript@5.4.5)(zod@3.23.4)
     devDependencies:
       '@dingify/eslint-config':
         specifier: workspace:*
@@ -548,6 +567,15 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
+  /@asteasolutions/zod-to-openapi@7.0.0(zod@3.23.4):
+    resolution: {integrity: sha512-rJRKHD2m6nUb/9ZheeN8nqOURX24WTzY8Sex1ZKT0Kpx+xfpRcD0fTD6vEeXNHGaDGxzu65Jj/jb2x6nLTjcMw==}
+    peerDependencies:
+      zod: ^3.20.2
+    dependencies:
+      openapi3-ts: 4.3.1
+      zod: 3.23.4
+    dev: false
+
   /@babel/code-frame@7.23.5:
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
     engines: {node: '>=6.9.0'}
@@ -743,14 +771,15 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@cloudflare/kv-asset-handler@0.3.1:
-    resolution: {integrity: sha512-lKN2XCfKCmpKb86a1tl4GIwsJYDy9TGuwjhDELLmpKygQhw8X2xR4dusgpC5Tg7q1pB96Eb0rBo81kxSILQMwA==}
+  /@cloudflare/kv-asset-handler@0.3.2:
+    resolution: {integrity: sha512-EeEjMobfuJrwoctj7FA1y1KEbM0+Q1xSjobIEyie9k4haVEBB7vkDvsasw1pM3rO39mL2akxIAzLMUAtrMHZhA==}
+    engines: {node: '>=16.13'}
     dependencies:
       mime: 3.0.0
     dev: true
 
-  /@cloudflare/workerd-darwin-64@1.20240403.0:
-    resolution: {integrity: sha512-gBsoGFHCkC3tfAmr/jr6UEKEyIIeNEvfbRSIJrrkkuJ8wqqkWGZB6pmKx5lfQDvQO8R+8PgcI4pduP0NY35s/Q==}
+  /@cloudflare/workerd-darwin-64@1.20240419.0:
+    resolution: {integrity: sha512-PGVe9sYWULHfvGhN0IZh8MsskNG/ufnBSqPbgFCxJHCTrVXLPuC35EoVaforyqjKRwj3U35XMyGo9KHcGnTeHQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
@@ -758,8 +787,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workerd-darwin-arm64@1.20240403.0:
-    resolution: {integrity: sha512-UykAt0YiFR4Y3o84QAEb6NQehwZ8CaEnZHw8doe1M03JiWxVcCdkDb3pbAs4p7Mj56/Gj0G0+SJ+JmQTn2aIQA==}
+  /@cloudflare/workerd-darwin-arm64@1.20240419.0:
+    resolution: {integrity: sha512-z4etQSPiD5Gcjs962LiC7ZdmXnN6SGof5KrYoFiSI9X9kUvpuGH/lnjVVPd+NnVNeDU2kzmcAIgyZjkjTaqVXQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
@@ -767,8 +796,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workerd-linux-64@1.20240403.0:
-    resolution: {integrity: sha512-MS+Mg7MtXEH6ZFJcrGreSqDe+vU9hRZt8AZdhIVkQKDOCS6AjmBTEz6r6tj1iGLMLei4pEZegyXwf06clSR9Og==}
+  /@cloudflare/workerd-linux-64@1.20240419.0:
+    resolution: {integrity: sha512-lBwhg0j3sYTFMsEb4bOClbVje8nqrYOu0H3feQlX+Eks94JIhWPkf8ywK4at/BUc1comPMhCgzDHwc2OMPUGgg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
@@ -776,8 +805,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workerd-linux-arm64@1.20240403.0:
-    resolution: {integrity: sha512-9oMs43nctF2TYYJOzCtVOldokweSWaSqWnUjIOsKOFZue2fG4UMgIH9Sh1D4/KCdVankA2xqZ08XhoV42Q9+0A==}
+  /@cloudflare/workerd-linux-arm64@1.20240419.0:
+    resolution: {integrity: sha512-ZMY6wwWkxL+WPq8ydOp/irSYjAnMhBz1OC1+4z+OANtDs2beaZODmq7LEB3hb5WUAaTPY7DIjZh3DfDfty0nYg==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
@@ -785,8 +814,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workerd-windows-64@1.20240403.0:
-    resolution: {integrity: sha512-5FGyjzDAoUaU15GhUAGXWzOOlbCLdiDHatnjl6XY0Mbiu3ik5lz592L15QkFnNVc9a3lZGGCIsfYW2sq2R01VQ==}
+  /@cloudflare/workerd-windows-64@1.20240419.0:
+    resolution: {integrity: sha512-YJjgaJN2yGTkV7Cr4K3i8N4dUwVQTclT3Pr3NpRZCcLjTszwlE53++XXDnHMKGXBbSguIizaVbmcU2EtmIXyeQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
@@ -1037,7 +1066,7 @@ packages:
       ts-pattern: 4.3.0
       unified: 10.1.2
       yaml: 2.4.1
-      zod: 3.22.4
+      zod: 3.23.4
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - esbuild
@@ -1063,10 +1092,6 @@ packages:
     peerDependencies:
       '@effect-ts/otel-node': '*'
     peerDependenciesMeta:
-      '@effect-ts/core':
-        optional: true
-      '@effect-ts/otel':
-        optional: true
       '@effect-ts/otel-node':
         optional: true
     dependencies:
@@ -1932,6 +1957,29 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@hono/zod-openapi@0.11.0(hono@4.3.6)(zod@3.23.4):
+    resolution: {integrity: sha512-thbxV4lWJoDo1NjF8ZGnd0muD3UHUpRqpKvS3RI+kWCXU05nyuViymUbPvVpp+O6i5SjovITTF91NRMTraZm3Q==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      hono: '>=3.11.3'
+      zod: 3.*
+    dependencies:
+      '@asteasolutions/zod-to-openapi': 7.0.0(zod@3.23.4)
+      '@hono/zod-validator': 0.2.1(hono@4.3.6)(zod@3.23.4)
+      hono: 4.3.6
+      zod: 3.23.4
+    dev: false
+
+  /@hono/zod-validator@0.2.1(hono@4.3.6)(zod@3.23.4):
+    resolution: {integrity: sha512-HFoxln7Q6JsE64qz2WBS28SD33UB2alp3aRKmcWnNLDzEL1BLsWfbdX6e1HIiUprHYTIXf5y7ax8eYidKUwyaA==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
+    dependencies:
+      hono: 4.3.6
+      zod: 3.23.4
+    dev: false
+
   /@hookform/resolvers@3.3.2(react-hook-form@7.47.0):
     resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
     peerDependencies:
@@ -2097,6 +2145,12 @@ packages:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@neondatabase/serverless@0.9.3:
+    resolution: {integrity: sha512-6ZBK8asl2Z3+ADEaELvbaVVGVlmY1oAzkxxZfpmXPKFuJhbDN+5fU3zYBamsahS/Ch1zE+CVWB3R+8QEI2LMSw==}
+    dependencies:
+      '@types/pg': 8.11.6
     dev: false
 
   /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.13.0)(next-auth@4.24.4):
@@ -2751,6 +2805,16 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@prisma/adapter-neon@5.13.0(@neondatabase/serverless@0.9.3):
+    resolution: {integrity: sha512-XIav2pP2lcyrvl0LHt8nvialytJPIW//hn1zTr426qMwnpag5avXnAx3/8ZMmYxGkZ4oKzizieu6mmh425RXcA==}
+    peerDependencies:
+      '@neondatabase/serverless': ^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0
+    dependencies:
+      '@neondatabase/serverless': 0.9.3
+      '@prisma/driver-adapter-utils': 5.13.0
+      postgres-array: 3.0.2
+    dev: false
+
   /@prisma/client@5.13.0(prisma@5.13.0):
     resolution: {integrity: sha512-uYdfpPncbZ/syJyiYBwGZS8Gt1PTNoErNYMuqHDa2r30rNSFtgTA/LXsSk55R7pdRTMi5pHkeP9B14K6nHmwkg==}
     engines: {node: '>=16.13'}
@@ -2766,6 +2830,12 @@ packages:
 
   /@prisma/debug@5.13.0:
     resolution: {integrity: sha512-699iqlEvzyCj9ETrXhs8o8wQc/eVW+FigSsHpiskSFydhjVuwTJEfj/nIYqTaWFYuxiWQRfm3r01meuW97SZaQ==}
+
+  /@prisma/driver-adapter-utils@5.13.0:
+    resolution: {integrity: sha512-SaimwvGuvXJTsWH+FOfl7PlkZZlPiRGeMEchC0kvB08Xw9B3CLYo/Q7zaY5Fp+u5D8asrpcFQmCjXEgDvOmPkg==}
+    dependencies:
+      '@prisma/debug': 5.13.0
+    dev: false
 
   /@prisma/engines-version@5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b:
     resolution: {integrity: sha512-AyUuhahTINGn8auyqYdmxsN+qn0mw3eg+uhkp8zwknXYIqoT3bChG4RqNY/nfDkPvzWAPBa9mrDyBeOnWSgO6A==}
@@ -4452,7 +4522,7 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@t3-oss/env-core@0.9.2(typescript@5.4.5)(zod@3.22.4):
+  /@t3-oss/env-core@0.9.2(typescript@5.4.5)(zod@3.23.4):
     resolution: {integrity: sha512-KgWXljUTHgO3o7GMZQPAD5+P+HqpauMNNHowlm7V2b9IeMitSUpNKwG6xQrup/xARWHTdxRVIl0mSI4wCevQhQ==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -4462,10 +4532,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.4.5
-      zod: 3.22.4
+      zod: 3.23.4
     dev: false
 
-  /@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.22.4):
+  /@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.23.4):
     resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
     peerDependencies:
       typescript: '>=5.0.0'
@@ -4474,9 +4544,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.9.2(typescript@5.4.5)(zod@3.22.4)
+      '@t3-oss/env-core': 0.9.2(typescript@5.4.5)(zod@3.23.4)
       typescript: 5.4.5
-      zod: 3.22.4
+      zod: 3.23.4
     dev: false
 
   /@tailwindcss/typography@0.5.10(tailwindcss@3.4.3):
@@ -4651,6 +4721,14 @@ packages:
 
   /@types/parse5@6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
+    dev: false
+
+  /@types/pg@8.11.6:
+    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+    dependencies:
+      '@types/node': 20.12.11
+      pg-protocol: 1.6.1
+      pg-types: 4.0.2
     dev: false
 
   /@types/prop-types@15.7.11:
@@ -9348,8 +9426,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /miniflare@3.20240403.0:
-    resolution: {integrity: sha512-4xoBRu60+7iCKRn6zZ/SiqP+U2FQ74LZymoZHhEcY3y62zHNRNKf8s9jsL/ooDtyQoAOKx9W5TjTGqDmOS5vfQ==}
+  /miniflare@3.20240419.1:
+    resolution: {integrity: sha512-Q9n0W07uUD/u0c/b03E4iogeXOAMjZnE3P7B5Yi8sPaZAx6TYWwjurGBja+Pg2yILN2iMaliEobfVyAKss33cA==}
     engines: {node: '>=16.13'}
     hasBin: true
     dependencies:
@@ -9361,10 +9439,10 @@ packages:
       glob-to-regexp: 0.4.1
       stoppable: 1.1.0
       undici: 5.28.4
-      workerd: 1.20240403.0
+      workerd: 1.20240419.0
       ws: 8.17.0
       youch: 3.3.3
-      zod: 3.22.4
+      zod: 3.23.4
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -9756,6 +9834,10 @@ packages:
       es-abstract: 1.22.5
     dev: false
 
+  /obuf@1.1.2:
+    resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+    dev: false
+
   /oidc-token-hash@5.0.3:
     resolution: {integrity: sha512-IF4PcGgzAr6XXSff26Sk/+P4KZFJVuHAJZj3wgO3vX2bMdNVp/QXTP3P7CEm9V1IdG8lDLY3HhiqpsE/nOwpPw==}
     engines: {node: ^10.13.0 || >=12.0.0}
@@ -9792,6 +9874,12 @@ packages:
       web-streams-polyfill: 3.3.3
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /openapi3-ts@4.3.1:
+    resolution: {integrity: sha512-ha/kTOLhMQL7MvS9Abu/cpCXx5qwHQ++88YkUzn1CGfmM8JvCOG/4ZE6tRsexgXRFaoJrcwLyf81H2Y/CXALtA==}
+    dependencies:
+      yaml: 2.4.1
     dev: false
 
   /openid-client@5.6.5:
@@ -9964,6 +10052,33 @@ packages:
       '@types/estree': 1.0.5
       estree-walker: 3.0.3
       is-reference: 3.0.2
+    dev: false
+
+  /pg-int8@1.0.1:
+    resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
+    engines: {node: '>=4.0.0'}
+    dev: false
+
+  /pg-numeric@1.0.2:
+    resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
+    engines: {node: '>=4'}
+    dev: false
+
+  /pg-protocol@1.6.1:
+    resolution: {integrity: sha512-jPIlvgoD63hrEuihvIg+tJhoGjUsLPn6poJY9N5CnlPd91c2T18T/9zBtLxZSb1EhYxBRoZJtzScCaWlYLtktg==}
+    dev: false
+
+  /pg-types@4.0.2:
+    resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
+    engines: {node: '>=10'}
+    dependencies:
+      pg-int8: 1.0.1
+      pg-numeric: 1.0.2
+      postgres-array: 3.0.2
+      postgres-bytea: 3.0.0
+      postgres-date: 2.1.0
+      postgres-interval: 3.0.0
+      postgres-range: 1.1.4
     dev: false
 
   /picocolors@1.0.0:
@@ -10139,6 +10254,32 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.2.0
+
+  /postgres-array@3.0.2:
+    resolution: {integrity: sha512-6faShkdFugNQCLwucjPcY5ARoW1SlbnrZjmGl0IrrqewpvxvhSLHimCVzqeuULCbG0fQv7Dtk1yDbG3xv7Veog==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /postgres-bytea@3.0.0:
+    resolution: {integrity: sha512-CNd4jim9RFPkObHSjVHlVrxoVQXz7quwNFpz7RY1okNNme49+sVyiTvTRobiLV548Hx/hb1BG+iE7h9493WzFw==}
+    engines: {node: '>= 6'}
+    dependencies:
+      obuf: 1.1.2
+    dev: false
+
+  /postgres-date@2.1.0:
+    resolution: {integrity: sha512-K7Juri8gtgXVcDfZttFKVmhglp7epKb1K4pgrkLxehjqkrgPhfG6OO8LHLkfaqkbpjNRnra018XwAr1yQFWGcA==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /postgres-interval@3.0.0:
+    resolution: {integrity: sha512-BSNDnbyZCXSxgA+1f5UU2GmwhoI0aU5yMxRGO8CdFEcY2BQF9xm/7MqKnYoM1nJDk8nONNWDk9WeSmePFhQdlw==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /postgres-range@1.1.4:
+    resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
+    dev: false
 
   /postmark@3.1.1:
     resolution: {integrity: sha512-4u+vfMulRnuEUdhqf0gDTXYU2WAEUp484gp8iDhwa3G0Ur25gmve7nI/gBk5SikqZUe6+uP3o0osAYdFpkbcdA==}
@@ -12340,37 +12481,37 @@ packages:
     dependencies:
       isexe: 2.0.0
 
-  /workerd@1.20240403.0:
-    resolution: {integrity: sha512-OcUPNNIUn4dC3dyRc/W6sTPjgFjJQVpbqpMCx7RmAzVrEzB+nJlz25FZr5alxIG5769UmzvMB1wlK/hMddHk0w==}
+  /workerd@1.20240419.0:
+    resolution: {integrity: sha512-9yV98KpkQgG+bdEsKEW8i1AYZgxns6NVSfdOVEB2Ue1pTMtIEYfUyqUE+O2amisRrfaC3Pw4EvjtTmVaoetfeg==}
     engines: {node: '>=16'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20240403.0
-      '@cloudflare/workerd-darwin-arm64': 1.20240403.0
-      '@cloudflare/workerd-linux-64': 1.20240403.0
-      '@cloudflare/workerd-linux-arm64': 1.20240403.0
-      '@cloudflare/workerd-windows-64': 1.20240403.0
+      '@cloudflare/workerd-darwin-64': 1.20240419.0
+      '@cloudflare/workerd-darwin-arm64': 1.20240419.0
+      '@cloudflare/workerd-linux-64': 1.20240419.0
+      '@cloudflare/workerd-linux-arm64': 1.20240419.0
+      '@cloudflare/workerd-windows-64': 1.20240419.0
     dev: true
 
-  /wrangler@3.47.0(@cloudflare/workers-types@4.20240403.0):
-    resolution: {integrity: sha512-aptr+g+ohgJLemIEoAVejcqnfnQWk248nkIyYxGDh8ohlDjQlo1vO0/mWiyqPUsmWOxl0Yr3jdZMtfi7iukayg==}
+  /wrangler@3.55.0(@cloudflare/workers-types@4.20240403.0):
+    resolution: {integrity: sha512-VhtCioKxOdVqkHa8jQ6C6bX3by2Ko0uM0DKzrA+6lBZvfDUlGDWSOPiG+1fOHBHj2JTVBntxWCztXP6L+Udr8w==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20240402.0
+      '@cloudflare/workers-types': ^4.20240419.0
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
     dependencies:
-      '@cloudflare/kv-asset-handler': 0.3.1
+      '@cloudflare/kv-asset-handler': 0.3.2
       '@cloudflare/workers-types': 4.20240403.0
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
       chokidar: 3.6.0
       esbuild: 0.17.19
-      miniflare: 3.20240403.0
+      miniflare: 3.20240419.1
       nanoid: 3.3.7
       path-to-regexp: 6.2.2
       resolve: 1.22.8
@@ -12485,8 +12626,17 @@ packages:
       stacktracey: 2.1.8
     dev: true
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod-openapi@2.17.0(zod@3.23.4):
+    resolution: {integrity: sha512-S6x14LmPWZ3Sbnx71pqzIB6oIox1ce6vHnJY7ZUYLBm8TTEQ6/g6+kwutna5jplAhzphkMbYPbtW3cmHXFcRBg==}
+    engines: {node: '>=16.11'}
+    peerDependencies:
+      zod: ^3.21.4
+    dependencies:
+      zod: 3.23.4
+    dev: false
+
+  /zod@3.23.4:
+    resolution: {integrity: sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==}
 
   /zustand@4.4.5(@types/react@18.3.2)(react@18.2.0):
     resolution: {integrity: sha512-jgIrBBLKncQW74PA2Lclct3gwD4aPughwGE4FqlXrv3rDqQox7JCn8rwUiFK6ygJcbBAvfTf8fF+ICg7HLD2FQ==}
@@ -12510,7 +12660,3 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
