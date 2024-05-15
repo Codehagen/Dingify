@@ -2,7 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserCredits } from "@/actions/get-credits";
 
-import { prisma } from "@dingify/db";
 import { Button } from "@dingify/ui/components/button";
 
 import { authOptions } from "@/lib/auth";
@@ -44,7 +43,7 @@ export default async function DashboardPage() {
   //   },
   // });
 
-  const properties = [1];
+  const properties = [];
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
