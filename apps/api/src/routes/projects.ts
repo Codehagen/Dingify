@@ -1,5 +1,5 @@
-// projects.ts
 import { Hono } from "hono";
+
 import { Env } from "../env";
 import { prisma } from "../lib/db";
 
@@ -21,20 +21,26 @@ projects.post("/", async (c) => {
     return c.json({ ok: false, message: "Invalid API key" }, 401);
   }
 
-  const result = await c.req.json();
+  // Parse and validate the request body
+  let result;
+  try {
+    result = await c.req.json();
+  } catch (error) {
+    return c.json({ ok: false, message: "Invalid JSON body" }, 400);
+  }
 
-  if (!result.success) {
+  if (!result || typeof result.name !== "string") {
     return c.json(
       {
         ok: false,
         message: "Invalid project data",
-        errors: result.error.issues,
+        errors: ["'name' is required and should be a string"],
       },
       400,
     );
   }
 
-  const { name } = result.data;
+  const { name } = result;
 
   const projectExists = await prisma(c.env).project.findFirst({
     where: {
