@@ -75,6 +75,21 @@ cp .env.example .env.local
 pnpm dev
 ```
 
+## REST-API Installation (optinal)
+
+If you want to use the REST-api you need to update the hono under `apps/api`
+
+```bash
+[vars]
+#MY_VAR = "my-variable"
+#DATABASE_URL = "Use same link as your db URL"
+```
+
+If you want to deploy it on Cloudflare you need to go run
+```bash
+pnpm run deploy
+```
+
 ## Tech Stack + Features
 
 ### Frameworks
