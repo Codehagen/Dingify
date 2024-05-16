@@ -18,14 +18,14 @@ import {
 import { Progress } from "@dingify/ui/components/progress";
 import { Separator } from "@dingify/ui/components/separator";
 
-export default function EventsDashboardDetails() {
+export default function EventsDashboardDetails({ event }) {
   return (
     <>
       <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
         <CardHeader className="flex flex-row items-start bg-muted/50">
           <div className="grid gap-0.5">
             <CardTitle className="group flex items-center gap-2 text-lg">
-              Event Oe31b70H
+              {event.name}
               <Button
                 className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
                 size="icon"
@@ -66,13 +66,13 @@ export default function EventsDashboardDetails() {
             <ul className="grid gap-3">
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Event Type</span>
-                <span>New Payment</span>
+                <span>{event.event}</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Channel</span>
                 <span>
                   <Badge className="text-xs" variant="default">
-                    new-channel-name
+                    {event.channel}
                   </Badge>
                 </span>
               </li>
@@ -83,23 +83,23 @@ export default function EventsDashboardDetails() {
                 <span className="text-muted-foreground">User</span>
                 <span>
                   <Badge className="text-xs" variant="outline">
-                    user-123
+                    {event.userId}
                   </Badge>
                 </span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Description</span>
-                <span>You got a new payment</span>
+                <span>{event.name}</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Icon</span>
-                <span>🎉</span>
+                <span>{event.icon}</span>
               </li>
               <li className="flex items-center justify-between font-semibold">
                 <span className="text-muted-foreground">Notify</span>
                 <span>
                   <Badge className="text-xs" variant="outline">
-                    true
+                    {event.notify.toString()}
                   </Badge>
                 </span>
               </li>

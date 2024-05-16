@@ -32,43 +32,11 @@ import {
   TabsTrigger,
 } from "@dingify/ui/components/tabs";
 
-const mockEvents = [
-  {
-    id: "1",
-    channel: "New-channel-name",
-    projectName: "ProjectName",
-    name: "You got a new payment",
-    userId: "user-123",
-    icon: "🎉",
-    notify: true,
-    amount: "$150.00",
-    createdAt: "2024-05-16T05:49:41.185Z",
-  },
-  {
-    id: "2",
-    channel: "Another-channel",
-    projectName: "ProjectName",
-    name: "New message received",
-    userId: "user-456",
-    icon: "💬",
-    notify: false,
-    amount: "$0.00",
-    createdAt: "2024-05-16T06:00:00.000Z",
-  },
-  {
-    id: "3",
-    channel: "Third-channel",
-    projectName: "ProjectName",
-    name: "New task assigned",
-    userId: "user-789",
-    icon: "📝",
-    notify: false,
-    amount: "$0.00",
-    createdAt: "2024-05-16T06:15:30.500Z",
-  },
-];
-
-export default function EventsDashboardTable() {
+export default function EventsDashboardTable({
+  events,
+  setSelectedEventId,
+  selectedEventId,
+}) {
   return (
     <>
       <Tabs defaultValue="week">
@@ -128,10 +96,13 @@ export default function EventsDashboardTable() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {mockEvents.map((event) => (
+                  {events.map((event) => (
                     <TableRow
                       key={event.id}
-                      className={event.notify ? "bg-accent" : ""}
+                      onClick={() => setSelectedEventId(event.id)}
+                      className={
+                        selectedEventId === event.id ? "bg-accent" : ""
+                      }
                     >
                       <TableCell>
                         <div className="font-medium">{event.channel}</div>
@@ -143,10 +114,7 @@ export default function EventsDashboardTable() {
                         {event.name}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <Badge
-                          className="text-xs"
-                          variant={event.notify ? "secondary" : "outline"}
-                        >
+                        <Badge className="text-xs" variant="secondary">
                           {event.userId}
                         </Badge>
                       </TableCell>
