@@ -61,7 +61,32 @@ export default async function DashboardPage() {
     },
   });
 
-  console.log("Channels:", channels); // Debugging line to print the channels
+  // Extract channel IDs
+  const channelIds = channels.map((channel) => channel.id);
+
+  // Fetch events for the user's channels
+  const events = await prisma.event.findMany({
+    where: {
+      channelId: {
+        in: channelIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      channelId: true,
+      userId: true,
+      icon: true,
+      tags: true,
+      notify: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  console.log("Events:", events); // Debugging line to print the events
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
@@ -92,7 +117,7 @@ export default async function DashboardPage() {
           </EmptyPlaceholder>
         ) : (
           // Render EventsTable if there are Events
-          <EventsDashboard />
+          <EventsDashboard events={events} />
           // <PropertiesTable properties={properties} />
         )}
       </div>
