@@ -105,10 +105,18 @@ export default function EventsDashboardTable({
                       }
                     >
                       <TableCell>
-                        <div className="font-medium">{event.channel}</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          {event.projectName}
-                        </div>
+                        {event.channel && event.channel.name && (
+                          <div className="font-medium">
+                            {event.channel.name}
+                          </div>
+                        )}
+                        {event.channel &&
+                          event.channel.project &&
+                          event.channel.project.name && (
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              {event.channel.project.name}
+                            </div>
+                          )}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         {event.name}

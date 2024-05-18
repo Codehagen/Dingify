@@ -64,7 +64,7 @@ export default async function DashboardPage() {
   // Extract channel IDs
   const channelIds = channels.map((channel) => channel.id);
 
-  // Fetch events for the user's channels
+  // Fetch events for the user's channels with project and channel names
   const events = await prisma.event.findMany({
     where: {
       channelId: {
@@ -80,13 +80,24 @@ export default async function DashboardPage() {
       tags: true,
       notify: true,
       createdAt: true,
+      channel: {
+        select: {
+          name: true,
+          project: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  console.log("Events:", events); // Debugging line to print the events
+  // Log the events to see the complete data structure
+  console.log("Events:", JSON.stringify(events, null, 2));
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
