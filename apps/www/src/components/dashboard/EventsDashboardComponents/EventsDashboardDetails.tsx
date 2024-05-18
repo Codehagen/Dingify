@@ -35,7 +35,9 @@ export default function EventsDashboardDetails({ event }) {
                 <span className="sr-only">Copy Event ID</span>
               </Button>
             </CardTitle>
-            <CardDescription>Date: November 23, 2023</CardDescription>
+            <CardDescription>
+              Date: {new Date(event.createdAt).toLocaleDateString()}
+            </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
             <Button className="h-8 gap-1" size="sm" variant="outline">
@@ -66,13 +68,23 @@ export default function EventsDashboardDetails({ event }) {
             <ul className="grid gap-3">
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Event Type</span>
-                <span>{event.event}</span>
+                <span>{event.name}</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Channel</span>
                 <span>
                   <Badge className="text-xs" variant="default">
-                    {event.channel}
+                    {event.channel ? event.channel.name : "No Channel"}
+                  </Badge>
+                </span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span className="text-muted-foreground">Project</span>
+                <span>
+                  <Badge className="text-xs" variant="default">
+                    {event.channel && event.channel.project
+                      ? event.channel.project.name
+                      : "No Project"}
                   </Badge>
                 </span>
               </li>
@@ -106,23 +118,6 @@ export default function EventsDashboardDetails({ event }) {
             </ul>
           </div>
           <Separator className="my-4" />
-          {/* <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-3">
-              <div className="font-semibold">Shipping Information</div>
-              <address className="grid gap-0.5 not-italic text-muted-foreground">
-                <span>Liam Johnson</span>
-                <span>1234 Main St.</span>
-                <span>Anytown, CA 12345</span>
-              </address>
-            </div>
-            <div className="grid auto-rows-max gap-3">
-              <div className="font-semibold">Billing Information</div>
-              <div className="text-muted-foreground">
-                Same as shipping address
-              </div>
-            </div>
-          </div>
-          <Separator className="my-4" /> */}
           <div className="grid gap-3">
             <div className="font-semibold">Meta Tags</div>
             <dl className="grid gap-3">
@@ -130,7 +125,7 @@ export default function EventsDashboardDetails({ event }) {
                 <dt className="text-muted-foreground">Plan</dt>
                 <dd>
                   <Badge className="text-xs" variant="secondary">
-                    Premium
+                    {event.tags.plan}
                   </Badge>
                 </dd>
               </div>
@@ -138,52 +133,21 @@ export default function EventsDashboardDetails({ event }) {
                 <dt className="text-muted-foreground">Cycle</dt>
                 <dd>
                   <Badge className="text-xs" variant="secondary">
-                    Monthly
+                    {event.tags.cycle}
                   </Badge>
                 </dd>
               </div>
-              {/* <div className="flex items-center justify-between">
-                <dt className="text-muted-foreground">Phone</dt>
-                <dd>
-                  <a href="#">+1 234 567 890</a>
-                </dd>
-              </div> */}
             </dl>
           </div>
-          {/* <Separator className="my-4" />
-          <div className="grid gap-3">
-            <div className="font-semibold">Payment Information</div>
-            <dl className="grid gap-3">
-              <div className="flex items-center justify-between">
-                <dt className="flex items-center gap-1 text-muted-foreground">
-                  Visa
-                </dt>
-                <dd>**** **** **** 4532</dd>
-              </div>
-            </dl>
-          </div> */}
         </CardContent>
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
           <div className="text-xs text-muted-foreground">
             Updated
-            <time dateTime="2023-11-23"> November 23, 2023</time>
+            <time dateTime={new Date(event.createdAt).toISOString()}>
+              {" "}
+              {new Date(event.createdAt).toLocaleDateString()}
+            </time>
           </div>
-          {/* <Pagination className="ml-auto mr-0 w-auto">
-          <PaginationContent>
-            <PaginationItem>
-              <Button className="h-6 w-6" size="icon" variant="outline">
-                <ChevronLeftIcon className="h-3.5 w-3.5" />
-                <span className="sr-only">Previous Event</span>
-              </Button>
-            </PaginationItem>
-            <PaginationItem>
-              <Button className="h-6 w-6" size="icon" variant="outline">
-                <ChevronRightIcon className="h-3.5 w-3.5" />
-                <span className="sr-only">Next Event</span>
-              </Button>
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination> */}
         </CardFooter>
       </Card>
     </>

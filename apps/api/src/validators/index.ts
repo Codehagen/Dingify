@@ -1,10 +1,10 @@
 import { OpenAPIHono, z } from "@hono/zod-openapi";
+import * as yaml from "yaml";
 import {
+  createDocument,
   extendZodWithOpenApi,
   ZodOpenApiOperationObject,
-  createDocument,
 } from "zod-openapi";
-import * as yaml from "yaml";
 
 extendZodWithOpenApi(z);
 
@@ -25,6 +25,10 @@ export const EventSchema = z
     event: z.string().openapi({
       description: "The specific event being described.",
       example: "Tech Conference",
+    }),
+    user_id: z.string().openapi({
+      description: "Accociated ID that you want to have on the user",
+      example: "user999 OR John Doe",
     }),
     icon: z.string().optional().openapi({
       description: "An optional icon for visual representation of the event.",

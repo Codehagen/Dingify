@@ -1,10 +1,11 @@
 // events.ts
 import { Hono } from "hono";
-import { sendDiscordNotification } from "../notifications/discord/sendDiscordNotification";
-import { parsePrismaError } from "../lib/parsePrismaError";
-import { EventSchema } from "../validators";
+
 import { Env } from "../env";
 import { prisma } from "../lib/db";
+import { parsePrismaError } from "../lib/parsePrismaError";
+import { sendDiscordNotification } from "../notifications/discord/sendDiscordNotification";
+import { EventSchema } from "../validators";
 
 const events = new Hono<{
   Bindings: Env;
@@ -29,7 +30,7 @@ events.post("/", async (c) => {
     const eventData = EventSchema.parse(await c.req.json());
 
     // Destructure validated data
-    const { channel, name, icon, notify, tags } = eventData;
+    const { channel, name, icon, notify, tags, user_id } = eventData;
 
     // Find the channel by name instead of ID
     const project = await prisma(c.env).project.findFirst({
@@ -80,7 +81,7 @@ events.post("/", async (c) => {
       data: {
         name: name || "",
         channelId: channelExists.id,
-        userId: user.id,
+        userId: user_id,
         icon: icon || "",
         notify,
         tags: tags || {},
