@@ -16,11 +16,13 @@ import {
 } from "@dingify/ui/components/dialog";
 import { Input } from "@dingify/ui/components/input";
 import { Label } from "@dingify/ui/components/label";
+import { useToast } from "@dingify/ui/components/use-toast";
 
 export function AddProjectButton() {
   const [projectName, setProjectName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +35,18 @@ export function AddProjectButton() {
         throw new Error(result.error || "Failed to add project");
       }
 
+      toast({
+        title: "Project Created",
+        description: `Project "${projectName}" created successfully.`,
+      });
+
       // router.push(`/project/${result.project?.id}`);
     } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
       console.error(error);
     } finally {
       setIsLoading(false);
