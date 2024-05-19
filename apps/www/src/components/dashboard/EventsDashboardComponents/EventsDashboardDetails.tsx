@@ -25,7 +25,7 @@ export default function EventsDashboardDetails({ event }) {
         <CardHeader className="flex flex-row items-start bg-muted/50">
           <div className="grid gap-0.5">
             <CardTitle className="group flex items-center gap-2 text-lg">
-              {event.name}
+              {event?.name}
               <Button
                 className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
                 size="icon"
@@ -36,7 +36,7 @@ export default function EventsDashboardDetails({ event }) {
               </Button>
             </CardTitle>
             <CardDescription>
-              Date: {new Date(event.createdAt).toLocaleDateString()}
+              Date: {new Date(event?.createdAt).toLocaleDateString()}
             </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
@@ -68,13 +68,13 @@ export default function EventsDashboardDetails({ event }) {
             <ul className="grid gap-3">
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Event Type</span>
-                <span>{event.name}</span>
+                <span>{event?.name}</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Channel</span>
                 <span>
                   <Badge className="text-xs" variant="default">
-                    {event.channel ? event.channel.name : "No Channel"}
+                    {event?.channel ? event?.channel.name : "No Channel"}
                   </Badge>
                 </span>
               </li>
@@ -82,8 +82,8 @@ export default function EventsDashboardDetails({ event }) {
                 <span className="text-muted-foreground">Project</span>
                 <span>
                   <Badge className="text-xs" variant="default">
-                    {event.channel && event.channel.project
-                      ? event.channel.project.name
+                    {event?.channel && event?.channel.project
+                      ? event?.channel.project.name
                       : "No Project"}
                   </Badge>
                 </span>
@@ -95,23 +95,23 @@ export default function EventsDashboardDetails({ event }) {
                 <span className="text-muted-foreground">User</span>
                 <span>
                   <Badge className="text-xs" variant="outline">
-                    {event.userId}
+                    {event?.userId}
                   </Badge>
                 </span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Description</span>
-                <span>{event.name}</span>
+                <span>{event?.name}</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Icon</span>
-                <span>{event.icon}</span>
+                <span>{event?.icon}</span>
               </li>
               <li className="flex items-center justify-between font-semibold">
                 <span className="text-muted-foreground">Notify</span>
                 <span>
                   <Badge className="text-xs" variant="outline">
-                    {event.notify.toString()}
+                    {event?.notify.toString()}
                   </Badge>
                 </span>
               </li>
@@ -125,7 +125,7 @@ export default function EventsDashboardDetails({ event }) {
                 <dt className="text-muted-foreground">Plan</dt>
                 <dd>
                   <Badge className="text-xs" variant="secondary">
-                    {event.tags.plan}
+                    {event?.tags.plan}
                   </Badge>
                 </dd>
               </div>
@@ -133,7 +133,7 @@ export default function EventsDashboardDetails({ event }) {
                 <dt className="text-muted-foreground">Cycle</dt>
                 <dd>
                   <Badge className="text-xs" variant="secondary">
-                    {event.tags.cycle}
+                    {event?.tags.cycle}
                   </Badge>
                 </dd>
               </div>
@@ -143,10 +143,10 @@ export default function EventsDashboardDetails({ event }) {
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
           <div className="text-xs text-muted-foreground">
             Updated
-            <time dateTime={new Date(event.createdAt).toISOString()}>
+            {/* <time dateTime={new Date(event?.createdAt).toISOString()}>
               {" "}
-              {new Date(event.createdAt).toLocaleDateString()}
-            </time>
+              {new Date(event?.createdAt).toLocaleDateString()}
+            </time> */}
           </div>
         </CardFooter>
       </Card>

@@ -1,8 +1,8 @@
 // actions/generate-api-key.js
 "use server";
 
-import { prisma } from "@dingify/db";
-
+// import { prisma } from "@dingify/db";
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
 import { generateApiKey } from "../lib/crypto";

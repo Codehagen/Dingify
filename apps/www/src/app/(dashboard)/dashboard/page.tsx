@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
+import { AddProjectButton } from "@/components/buttons/AddProjectButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import EventsDashboard from "@/components/dashboard/EventsDashboard";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -108,9 +109,10 @@ export default async function DashboardPage() {
         {userCredits.success && availableCredits > 0 ? (
           <AddPropertyButton />
         ) : (
-          <Button disabled variant="outline">
-            Add Credits to Add Channel
-          </Button>
+          // <Button disabled variant="outline">
+          //   Add Credits to Add Channel
+          // </Button>
+          <AddProjectButton />
         )}
       </DashboardHeader>
       <div>
