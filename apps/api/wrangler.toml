@@ -4,7 +4,6 @@ main = "src/index.ts"
 
 [vars]
 MY_VAR = "my-variable"
-DATABASE_URL = "postgresql://neondb_owner:5OH2SVQdpITs@ep-empty-wildflower-a2j8ae8u.eu-central-1.aws.neon.tech/Dingify2?sslmode=require"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
