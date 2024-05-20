@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { createEvent } from "@/actions/create-event";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,7 +18,6 @@ import {
   FormMessage,
 } from "@dingify/ui/components/form";
 import { Input } from "@dingify/ui/components/input";
-import { Label } from "@dingify/ui/components/label";
 import {
   Sheet,
   SheetClose,
@@ -38,10 +38,6 @@ const FormSchema = z.object({
   user_id: z.string().min(1, "User ID is required"),
   icon: z.string().min(1, "Icon is required"),
   notify: z.boolean(),
-  tags: z.object({
-    plan: z.string().min(1, "Plan is required"),
-    cycle: z.string().min(1, "Cycle is required"),
-  }),
 });
 
 export function EventDashboardDetailsSheet() {
@@ -54,24 +50,37 @@ export function EventDashboardDetailsSheet() {
       event: "",
       user_id: "",
       icon: "",
-      notify: false,
-      tags: {
-        plan: "",
-        cycle: "",
-      },
+      notify: true,
     },
   });
 
-  const onSubmit = (data) => {
-    toast({
-      title: "Event Created",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-    // Handle form submission (e.g., send data to the server)
+  const onSubmit = async (data) => {
+    console.log("Form data to submit:", data); // Log form dat
+    try {
+      const result = await createEvent(data);
+      if (result.success) {
+        toast({
+          title: "Event Created",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">
+                {JSON.stringify(data, null, 2)}
+              </code>
+            </pre>
+          ),
+        });
+        console.log("Event created:", result.event); // Log the created event
+        // Optionally refresh the page or clear the form
+        // form.reset();
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an error creating the event.",
+        variant: "destructive",
+      });
+      console.error("Error creating event:", error); // Log any error
+    }
   };
 
   return (
@@ -83,8 +92,7 @@ export function EventDashboardDetailsSheet() {
         <SheetHeader>
           <SheetTitle>Create Event</SheetTitle>
           <SheetDescription>
-            Fill in the details to create a new event. Click save when you're
-            done.
+            Fill in the details to create a new event.
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -170,7 +178,6 @@ export function EventDashboardDetailsSheet() {
                     You can manage your notifications in the{" "}
                     <Link href="/dashboard/settings">settings</Link> page.
                   </FormDescription>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -187,8 +194,8 @@ export function EventDashboardDetailsSheet() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
-            <FormField
+            /> */}
+            {/* <FormField
               control={form.control}
               name="tags.cycle"
               render={({ field }) => (
@@ -202,9 +209,7 @@ export function EventDashboardDetailsSheet() {
               )}
             /> */}
             <SheetFooter>
-              <SheetClose asChild>
-                <Button type="submit">Save changes</Button>
-              </SheetClose>
+              <Button type="submit">Save changes</Button>
             </SheetFooter>
           </form>
         </Form>

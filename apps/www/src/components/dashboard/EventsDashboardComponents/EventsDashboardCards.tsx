@@ -11,7 +11,7 @@ import { Progress } from "@dingify/ui/components/progress";
 
 import { EventDashboardDetailsSheet } from "./EventDashboardDetailsSheet";
 
-export default async function EventsDashboardCards({ eventStats }) {
+export default function EventsDashboardCards({ eventStats }) {
   return (
     <>
       <Card className="sm:col-span-2">

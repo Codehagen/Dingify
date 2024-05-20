@@ -22,7 +22,7 @@ import {
 import { Separator } from "@dingify/ui/components/separator";
 import { useToast } from "@dingify/ui/components/use-toast";
 
-export default async function EventsDashboardDetails({ event }) {
+export default function EventsDashboardDetails({ event }) {
   const { toast } = useToast();
 
   const handleDelete = async () => {
