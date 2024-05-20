@@ -1,3 +1,6 @@
+import { deleteEvent } from "@/actions/delete-event";
+import { File, Pencil, Trash } from "lucide-react";
+
 import { Badge } from "@dingify/ui/components/badge";
 import { Button } from "@dingify/ui/components/button";
 import {
@@ -13,12 +16,31 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
-import { Progress } from "@dingify/ui/components/progress";
 import { Separator } from "@dingify/ui/components/separator";
+import { useToast } from "@dingify/ui/components/use-toast";
 
-export default function EventsDashboardDetails({ event }) {
+export default async function EventsDashboardDetails({ event }) {
+  const { toast } = useToast();
+
+  const handleDelete = async () => {
+    try {
+      await deleteEvent(event.id);
+      toast({
+        title: "Event Deleted",
+        description: "The event has been deleted successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an error deleting the event.",
+        variant: "destructive",
+      });
+      console.error("Error deleting event:", error);
+    }
+  };
   return (
     <>
       <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
@@ -54,10 +76,19 @@ export default function EventsDashboardDetails({ event }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Export</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  <span>Edit</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <File className="mr-2 h-4 w-4" />
+                  <span>Export</span>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Trash</DropdownMenuItem>
+                <DropdownMenuItem onSelect={handleDelete}>
+                  <Trash className="mr-2 h-4 w-4" />
+                  <span>Delete</span>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

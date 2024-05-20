@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserCredits } from "@/actions/get-credits";
-
-import { Button } from "@dingify/ui/components/button";
+import { getEventStats } from "@/actions/stats/get-events-stats";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
@@ -13,10 +11,7 @@ import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import EventsDashboard from "@/components/dashboard/EventsDashboard";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
-import PropertiesTable from "@/components/properties/Propertiestable";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
-import { columns, Payment } from "@/components/table/dashboard/columns";
-import { DataTable } from "@/components/table/dashboard/data-table";
 
 export const metadata = {
   title: "Dingify Dashboard - Your Alerts Overview",
@@ -27,6 +22,7 @@ export const metadata = {
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   const userCredits = await getUserCredits();
+  const eventStats = await getEventStats();
 
   if (!user) {
     redirect(authOptions.pages?.signIn || "/login");
@@ -97,9 +93,6 @@ export default async function DashboardPage() {
     },
   });
 
-  // Log the events to see the complete data structure
-  console.log("Events:", JSON.stringify(events, null, 2));
-
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
 
@@ -107,7 +100,7 @@ export default async function DashboardPage() {
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
         {userCredits.success && availableCredits > 0 ? (
-          <AddPropertyButton />
+          <AddProjectButton />
         ) : (
           // <Button disabled variant="outline">
           //   Add Credits to Add Channel
@@ -130,8 +123,7 @@ export default async function DashboardPage() {
           </EmptyPlaceholder>
         ) : (
           // Render EventsTable if there are Events
-          <EventsDashboard events={events} />
-          // <PropertiesTable properties={properties} />
+          <EventsDashboard events={events} eventStats={eventStats} />
         )}
       </div>
     </DashboardShell>
