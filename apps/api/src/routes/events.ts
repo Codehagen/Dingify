@@ -1,4 +1,3 @@
-// events.ts
 import { Hono } from "hono";
 
 import { Env } from "../env";
@@ -11,6 +10,7 @@ const events = new Hono<{
   Bindings: Env;
 }>();
 
+// POST - Create Event
 events.post("/", async (c) => {
   const apiKey = c.req.header("x-api-key");
   if (!apiKey) {
@@ -32,7 +32,7 @@ events.post("/", async (c) => {
     // Destructure validated data
     const { channel, name, icon, notify, tags, user_id } = eventData;
 
-    // Find the channel by name instead of ID
+    // Find the user's project
     const project = await prisma(c.env).project.findFirst({
       where: {
         userId: user.id,
@@ -42,6 +42,7 @@ events.post("/", async (c) => {
     if (!project) {
       return c.json(
         {
+          ok: false,
           message:
             "No projects found for this user. Ensure the user has projects created.",
         },
@@ -49,6 +50,7 @@ events.post("/", async (c) => {
       );
     }
 
+    // Find the channel by name
     const channelExists = await prisma(c.env).channel.findFirst({
       where: {
         name: channel,
@@ -57,20 +59,18 @@ events.post("/", async (c) => {
     });
 
     if (!channelExists) {
-      return c.json(
-        {
-          message:
-            "No channel found with the provided channel name. You need to add it on the website",
-        },
-        404,
-      );
-    }
+      const availableChannels = await prisma(c.env).channel.findMany({
+        where: { projectId: project.id },
+        select: { name: true },
+      });
 
-    if (!channelExists) {
+      const channelNames = availableChannels.map((ch) => ch.name).join(", ");
+
       return c.json(
         {
-          message:
-            "No channel found with the provided channel name. You need to add it on the website",
+          ok: false,
+          message: `No channel found with the provided channel name. You need to add it on the website. These are your available channels: ${channelNames}`,
+          availableChannels: availableChannels.map((ch) => ch.name),
         },
         404,
       );
@@ -103,12 +103,14 @@ events.post("/", async (c) => {
   }
 });
 
+// GET - Retrieve Events
 events.get("/", async (c) => {
   const apiKey = c.req.header("x-api-key");
   if (!apiKey) {
     return c.json({ ok: false, message: "API key is required" }, 401);
   }
 
+  // Find user by API key
   const user = await prisma(c.env).user.findUnique({
     where: { apiKey },
   });
@@ -118,13 +120,64 @@ events.get("/", async (c) => {
   }
 
   try {
-    const events = await prisma(c.env).event.findMany({
+    console.log("User ID for event retrieval:", user.id); // Log the user ID
+
+    // Find projects for the user
+    const projects = await prisma(c.env).project.findMany({
       where: {
         userId: user.id,
       },
+      select: {
+        id: true,
+      },
     });
+
+    if (projects.length === 0) {
+      return c.json(
+        {
+          ok: false,
+          message: "No projects found for this user.",
+        },
+        404,
+      );
+    }
+
+    const projectIds = projects.map((project) => project.id);
+
+    // Find channels in those projects
+    const channels = await prisma(c.env).channel.findMany({
+      where: {
+        projectId: { in: projectIds },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (channels.length === 0) {
+      return c.json(
+        {
+          ok: false,
+          message: "No channels found in the user's projects.",
+        },
+        404,
+      );
+    }
+
+    const channelIds = channels.map((channel) => channel.id);
+
+    // Retrieve events for those channels
+    const events = await prisma(c.env).event.findMany({
+      where: {
+        channelId: { in: channelIds },
+      },
+    });
+
+    console.log("Retrieved events:", events); // Log the retrieved events
+
     return c.json({ ok: true, events });
   } catch (error: any) {
+    console.error("Failed to retrieve events:", error);
     return c.json(
       {
         ok: false,
@@ -132,7 +185,7 @@ events.get("/", async (c) => {
         error: error.message || "Unknown error",
       },
       500,
-    ); // Sending a 500 Internal Server Error status code
+    );
   }
 });
 
