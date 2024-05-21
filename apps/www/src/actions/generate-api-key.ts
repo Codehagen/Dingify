@@ -13,6 +13,14 @@ export async function generateAndSaveApiKey() {
 	const user = await getCurrentUser();
 	const userId = user?.id;
 
+	if (!process.env.UNKEY_ROOT_KEY) {
+		console.error("UNKEY_ROOT_KEY environment variable is not set.");
+		return {
+			success: false,
+			error: "UNKEY_ROOT_KEY environment variable is not set.",
+		};
+	}
+
 	const unkey = new Unkey({ rootKey: process.env.UNKEY_ROOT_KEY });
 
 	if (!userId) {
@@ -20,9 +28,7 @@ export async function generateAndSaveApiKey() {
 		return { success: false, error: "User not authenticated" };
 	}
 
-	const {
-		result: { key: apiKey },
-	} = await unkey.keys.create({
+	const { result } = await unkey.keys.create({
 		apiId: "api_3PkKmeLT2WeGsbRUVWH1YAZJK886",
 		prefix: "ding",
 		ownerId: userId,
@@ -34,6 +40,13 @@ export async function generateAndSaveApiKey() {
 		},
 		enabled: true,
 	});
+
+	if (!result) {
+		console.error("Error creating API key.");
+		return { success: false, error: "Error creating API key." };
+	}
+
+	const apiKey = result.key;
 
 	console.log(`Generated API key for user ID: ${userId}. API Key: ${apiKey}`);
 
