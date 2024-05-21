@@ -1,9 +1,10 @@
+// actions/create-project-and-channel.js
 "use server";
 
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
-export async function createProjectAndChannel(projectName, channelName) {
+export async function createProjectAndChannel(projectName) {
   const user = await getCurrentUser();
   const userId = user?.id;
 
@@ -20,18 +21,21 @@ export async function createProjectAndChannel(projectName, channelName) {
         userId: userId,
       },
     });
+    console.log(
+      `Created project with ID: ${newProject.id} for user ID: ${userId}.`,
+    );
 
-    // Create a new channel with a default name
+    // Create a new channel with a default name within the new project
     const newChannel = await prisma.channel.create({
       data: {
         name: "new-channel-name",
         projectId: newProject.id,
       },
     });
-
     console.log(
-      `Project and channel created successfully for user ID: ${userId}.`,
+      `Created channel with ID: ${newChannel.id} for project ID: ${newProject.id}.`,
     );
+
     return { success: true, project: newProject, channel: newChannel };
   } catch (error) {
     console.error(

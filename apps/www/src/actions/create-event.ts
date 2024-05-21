@@ -1,3 +1,4 @@
+// actions/create-event.js
 "use server";
 
 import { prisma } from "@/lib/db";
@@ -24,10 +25,19 @@ export async function createEvent(data) {
     throw new Error("Project not found for the authenticated user");
   }
 
+  // Ensure the channel is unique within the project
   const upsertChannel = await prisma.channel.upsert({
-    where: { name: channel },
+    where: {
+      projectId_name: {
+        projectId: project.id,
+        name: channel,
+      },
+    },
     update: {},
-    create: { name: channel, projectId: project.id },
+    create: {
+      name: channel,
+      projectId: project.id,
+    },
   });
 
   const newEvent = await prisma.event.create({

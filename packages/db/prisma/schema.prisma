@@ -92,12 +92,13 @@ model Project {
 
 model Channel {
   id        String   @id @default(cuid())
-  name      String   @unique
+  name      String
   projectId String
   project   Project  @relation(fields: [projectId], references: [id])
   events    Event[]
   createdAt DateTime @default(now())
 
+  @@unique([projectId, name])
   @@map(name: "channels")
 }
 

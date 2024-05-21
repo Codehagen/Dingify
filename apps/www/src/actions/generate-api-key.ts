@@ -28,16 +28,7 @@ export async function generateAndSaveApiKey() {
     console.log(`API key saved successfully for user ID: ${userId}.`);
 
     // Create a new project and channel
-    const projectName = "Project1";
-    const channelName = "new-channel-name";
-    console.log(
-      `Creating project with name: ${projectName} and channel with name: ${channelName}`,
-    );
-
-    const projectResponse = await createProjectAndChannel(
-      projectName,
-      channelName,
-    );
+    const projectResponse = await createProjectAndChannel("Project1");
     if (!projectResponse.success) {
       throw new Error(projectResponse.error);
     }
