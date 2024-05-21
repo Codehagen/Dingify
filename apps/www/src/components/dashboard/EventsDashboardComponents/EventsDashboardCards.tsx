@@ -9,7 +9,9 @@ import {
 } from "@dingify/ui/components/card";
 import { Progress } from "@dingify/ui/components/progress";
 
-export default function EventsDashboardCards() {
+import { EventDashboardDetailsSheet } from "./EventDashboardDetailsSheet";
+
+export default function EventsDashboardCards({ eventStats }) {
   return (
     <>
       <Card className="sm:col-span-2">
@@ -21,35 +23,52 @@ export default function EventsDashboardCards() {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button>Create New Event</Button>
+          {/* <Button>Create New Event</Button> */}
+          <EventDashboardDetailsSheet />
         </CardFooter>
       </Card>
       <Card x-chunk="dashboard-05-chunk-1">
         <CardHeader className="pb-2">
           <CardDescription>This Week</CardDescription>
-          <CardTitle className="text-4xl">$1,329</CardTitle>
+          <CardTitle className="text-4xl">
+            {eventStats.currentWeekEvents}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-xs text-muted-foreground">
-            +25% from last week
+            {eventStats.weeklyChange >= 0
+              ? `+${eventStats.weeklyChange.toFixed(2)}%`
+              : `${eventStats.weeklyChange.toFixed(2)}%`}{" "}
+            from last week
           </div>
         </CardContent>
         <CardFooter>
-          <Progress aria-label="25% increase" value={25} />
+          <Progress
+            aria-label={`${eventStats.weeklyChange.toFixed(2)}% change`}
+            value={eventStats.weeklyChange}
+          />
         </CardFooter>
       </Card>
       <Card x-chunk="dashboard-05-chunk-2">
         <CardHeader className="pb-2">
           <CardDescription>This Month</CardDescription>
-          <CardTitle className="text-4xl">$5,329</CardTitle>
+          <CardTitle className="text-4xl">
+            {eventStats.currentMonthEvents}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-xs text-muted-foreground">
-            +10% from last month
+            {eventStats.monthlyChange >= 0
+              ? `+${eventStats.monthlyChange.toFixed(2)}%`
+              : `${eventStats.monthlyChange.toFixed(2)}%`}{" "}
+            from last month
           </div>
         </CardContent>
         <CardFooter>
-          <Progress aria-label="12% increase" value={12} />
+          <Progress
+            aria-label={`${eventStats.monthlyChange.toFixed(2)}% change`}
+            value={eventStats.monthlyChange}
+          />
         </CardFooter>
       </Card>
     </>

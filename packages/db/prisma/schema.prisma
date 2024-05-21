@@ -92,7 +92,7 @@ model Project {
 
 model Channel {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   projectId String
   project   Project  @relation(fields: [projectId], references: [id])
   events    Event[]
