@@ -1,8 +1,9 @@
 name = "api"
-compatibility_date = "2023-12-01"
+compatibility_date = "2023-12-28"
+main = "src/index.ts"
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+MY_VAR = "my-variable"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

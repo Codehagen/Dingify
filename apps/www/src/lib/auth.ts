@@ -7,9 +7,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 
-import { prisma } from "@dingify/db";
-
 import { resend } from "./email";
+import { prisma } from "./db";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -100,7 +99,7 @@ export const authOptions: NextAuthOptions = {
           console.log(`Onboarding email sent to ${dbUser.email}`);
         } else {
           console.log(
-            `User email or name is null for user with email: ${token.email}`
+            `User email or name is null for user with email: ${token.email}`,
           );
         }
       }

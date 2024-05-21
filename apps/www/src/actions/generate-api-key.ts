@@ -1,8 +1,9 @@
 // actions/generate-api-key.js
 "use server";
 
-import { prisma } from "@dingify/db";
+import { createProjectAndChannel } from "@/actions/create-project-and-channel"; // Import the function
 
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
 import { generateApiKey } from "../lib/crypto";

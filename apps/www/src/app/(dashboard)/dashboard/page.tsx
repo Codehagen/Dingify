@@ -1,21 +1,17 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserCredits } from "@/actions/get-credits";
-
-import { prisma } from "@dingify/db";
-import { Button } from "@dingify/ui/components/button";
+import { getEventStats } from "@/actions/stats/get-events-stats";
 
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
+import { AddProjectButton } from "@/components/buttons/AddProjectButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
-import { LanugageButton } from "@/components/buttons/LanguageButton";
+import EventsDashboard from "@/components/dashboard/EventsDashboard";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
-import PropertiesTable from "@/components/properties/Propertiestable";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
-import { columns, Payment } from "@/components/table/dashboard/columns";
-import { DataTable } from "@/components/table/dashboard/data-table";
 
 export const metadata = {
   title: "Dingify Dashboard - Your Alerts Overview",
@@ -26,25 +22,76 @@ export const metadata = {
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   const userCredits = await getUserCredits();
+  const eventStats = await getEventStats();
 
   if (!user) {
     redirect(authOptions.pages?.signIn || "/login");
   }
 
-  // const properties = await prisma.event.findMany({
-  //   where: {
-  //     userId: user.id,
-  //   },
-  //   select: {
-  //     id: true,
-  //     createdAt: true,
-  //   },
-  //   orderBy: {
-  //     createdAt: "desc",
-  //   },
-  // });
+  // Fetch projects associated with the user
+  const projects = await prisma.project.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  });
 
-  const properties = [];
+  // Extract project IDs
+  const projectIds = projects.map((project) => project.id);
+
+  // Fetch channels for the user's projects
+  const channels = await prisma.channel.findMany({
+    where: {
+      projectId: {
+        in: projectIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  // Extract channel IDs
+  const channelIds = channels.map((channel) => channel.id);
+
+  // Fetch events for the user's channels with project and channel names
+  const events = await prisma.event.findMany({
+    where: {
+      channelId: {
+        in: channelIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      channelId: true,
+      userId: true,
+      icon: true,
+      tags: true,
+      notify: true,
+      createdAt: true,
+      channel: {
+        select: {
+          name: true,
+          project: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   // Ensure userCredits.credits is defined, default to 0 if undefined
   const availableCredits = userCredits.credits ?? 0;
@@ -53,32 +100,30 @@ export default async function DashboardPage() {
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
         {userCredits.success && availableCredits > 0 ? (
-          <AddPropertyButton />
+          <AddProjectButton />
         ) : (
-          <Button disabled variant="outline">
-            Add Credits to Add Properties
-          </Button>
+          // <Button disabled variant="outline">
+          //   Add Credits to Add Channel
+          // </Button>
+          <AddProjectButton />
         )}
       </DashboardHeader>
       <div>
-        {properties.length === 0 ? (
-          // Render EmptyPlaceholder if there are no properties
+        {channels.length === 0 ? (
+          // Render EmptyPlaceholder if there are no channels
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>There is no events</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>
+              There are no channels
+            </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You need to generate a API key first
+              You need to generate an API key first
             </EmptyPlaceholder.Description>
-            {/* <Link href="/property" passHref className="mb-4">
-              <Button variant="outline">Add your first property</Button>
-            </Link> */}
-            {/* <LanugageButton userId={user.id} /> */}
             <AddApiKeyButton />
           </EmptyPlaceholder>
         ) : (
           // Render EventsTable if there are Events
-          <p>Place EventsTable HERE!</p>
-          // <PropertiesTable properties={properties} />
+          <EventsDashboard events={events} eventStats={eventStats} />
         )}
       </div>
     </DashboardShell>

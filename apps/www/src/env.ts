@@ -14,6 +14,7 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    NODE_ENV: z.enum(["development", "test", "production"]),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -42,5 +43,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID,
     NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID:
       process.env.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID,
+    NODE_ENV: process.env.NODE_ENV,
   },
 });
