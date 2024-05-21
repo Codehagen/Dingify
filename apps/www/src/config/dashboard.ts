@@ -34,5 +34,17 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/settings",
       icon: "settings",
     },
+    {
+      title: "Placeholder Names",
+      href: "/dashboard/channels",
+    },
+    {
+      title: "Marketing",
+      href: "/dashboard/channels/marketing",
+    },
+    {
+      title: "Sales",
+      href: "/dashboard/channels/sales",
+    },
   ],
 };
