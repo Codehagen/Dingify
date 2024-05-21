@@ -1,7 +1,8 @@
 // actions/generate-api-key.js
 "use server";
 
-// import { prisma } from "@dingify/db";
+import { createProjectAndChannel } from "@/actions/create-project-and-channel"; // Import the function
+
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
@@ -17,7 +18,6 @@ export async function generateAndSaveApiKey() {
   }
 
   const apiKey = generateApiKey();
-
   console.log(`Generated API key for user ID: ${userId}. API Key: ${apiKey}`);
 
   try {
@@ -26,7 +26,33 @@ export async function generateAndSaveApiKey() {
       data: { apiKey },
     });
     console.log(`API key saved successfully for user ID: ${userId}.`);
-    return { success: true, user: updatedUser, apiKey };
+
+    // Create a new project and channel
+    const projectName = "Project1";
+    const channelName = "new-channel-name";
+    console.log(
+      `Creating project with name: ${projectName} and channel with name: ${channelName}`,
+    );
+
+    const projectResponse = await createProjectAndChannel(
+      projectName,
+      channelName,
+    );
+    if (!projectResponse.success) {
+      throw new Error(projectResponse.error);
+    }
+
+    console.log(
+      `Project and channel created successfully for user ID: ${userId}.`,
+    );
+
+    return {
+      success: true,
+      user: updatedUser,
+      apiKey,
+      project: projectResponse.project,
+      channel: projectResponse.channel,
+    };
   } catch (error) {
     console.error(`Error saving API key for user ID: ${userId}`, error);
     return { success: false, error: error.message };

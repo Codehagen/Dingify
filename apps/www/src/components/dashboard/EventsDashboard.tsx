@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
+import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+
+import { EventDashboardDetailsSheet } from "./EventsDashboardComponents/EventDashboardDetailsSheet";
 import EventsDashboardCards from "./EventsDashboardComponents/EventsDashboardCards";
 import EventsDashboardDetails from "./EventsDashboardComponents/EventsDashboardDetails";
 import EventsDashboardTable from "./EventsDashboardComponents/EventsDashboardTable";
@@ -17,11 +21,22 @@ export default function EventsDashboard({ events, eventStats }) {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <EventsDashboardCards eventStats={eventStats} />
         </div>
-        <EventsDashboardTable
-          events={events}
-          setSelectedEventId={setSelectedEventId}
-          selectedEventId={selectedEventId}
-        />
+        {events.length > 0 ? (
+          <EventsDashboardTable
+            events={events}
+            setSelectedEventId={setSelectedEventId}
+            selectedEventId={selectedEventId}
+          />
+        ) : (
+          <EmptyPlaceholder>
+            <EmptyPlaceholder.Icon name="post" />
+            <EmptyPlaceholder.Title>There are no events</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Description>
+              You need to create an event first to see it here
+            </EmptyPlaceholder.Description>
+            <EventDashboardDetailsSheet />
+          </EmptyPlaceholder>
+        )}
       </div>
       <div>
         <EventsDashboardDetails event={selectedEvent} />

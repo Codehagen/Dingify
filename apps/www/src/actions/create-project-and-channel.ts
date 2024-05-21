@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
-export async function createProjectAndChannel(projectName) {
+export async function createProjectAndChannel(projectName, channelName) {
   const user = await getCurrentUser();
   const userId = user?.id;
 
