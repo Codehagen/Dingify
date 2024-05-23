@@ -22,10 +22,6 @@ export const EventSchema = z
       description: "The channel name associated with the event.",
       example: "Main Channel",
     }),
-    event: z.string().openapi({
-      description: "The specific event being described.",
-      example: "Tech Conference",
-    }),
     user_id: z.string().openapi({
       description: "Accociated ID that you want to have on the user",
       example: "user999 OR John Doe",

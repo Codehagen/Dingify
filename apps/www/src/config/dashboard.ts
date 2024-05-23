@@ -2,11 +2,10 @@ import { DashboardConfig } from "@/types";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
-    // {
-    //   title: "Documentation",
-    //   href: "/docs",
-    //   disabled: true,
-    // },
+    {
+      title: "Docs",
+      href: "https://docs.dingify.io/",
+    },
     {
       title: "Support",
       href: "/support",
