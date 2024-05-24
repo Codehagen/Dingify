@@ -75,7 +75,7 @@ cp .env.example .env.local
 pnpm dev
 
 # To push the DB schema
-pnpmpnpm --filter=db db:push
+pnpm --filter=db db:push
 ```
 
 ## REST-API Installation (optinal)
