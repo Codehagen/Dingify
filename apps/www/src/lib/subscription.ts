@@ -1,13 +1,13 @@
 // @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
 import type { UserSubscriptionPlan } from "@/types";
+
 import { pricingData } from "@/config/subscriptions";
+import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 
-import { prisma } from "@dingify/db";
-
 export async function getUserSubscriptionPlan(
-  userId: string
+  userId: string,
 ): Promise<UserSubscriptionPlan> {
   const user = await prisma.user.findFirst({
     where: {
@@ -50,7 +50,7 @@ export async function getUserSubscriptionPlan(
   let isCanceled = false;
   if (isPaid && user.stripeSubscriptionId) {
     const stripePlan = await stripe.subscriptions.retrieve(
-      user.stripeSubscriptionId
+      user.stripeSubscriptionId,
     );
     isCanceled = stripePlan.cancel_at_period_end;
   }

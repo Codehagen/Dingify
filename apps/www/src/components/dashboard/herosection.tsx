@@ -47,10 +47,10 @@ export default function HeroSection() {
             >
               <GetStartedButton />
               <Link
-                href="#"
+                href="/dashboard"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "px-4"
+                  "px-4",
                 )}
               >
                 <Icons.chevrondown className="mr-2 h-4 w-4" />

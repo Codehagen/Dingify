@@ -18,11 +18,6 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard",
       icon: "home",
     },
-    // {
-    //   title: "Dev Testing",
-    //   href: "/dev",
-    //   icon: "laptop",
-    // },
     {
       title: "Billing",
       href: "/dashboard/billing",
@@ -33,17 +28,17 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/settings",
       icon: "settings",
     },
-    {
-      title: "Placeholder Names",
-      href: "/dashboard/channels",
-    },
-    {
-      title: "Marketing",
-      href: "/dashboard/channels/marketing",
-    },
-    {
-      title: "Sales",
-      href: "/dashboard/channels/sales",
-    },
+    // {
+    //   title: "Placeholder Names",
+    //   href: "/dashboard/channels",
+    // },
+    // {
+    //   title: "Marketing",
+    //   href: "/dashboard/channels/marketing",
+    // },
+    // {
+    //   title: "Sales",
+    //   href: "/dashboard/channels/sales",
+    // },
   ],
 };
