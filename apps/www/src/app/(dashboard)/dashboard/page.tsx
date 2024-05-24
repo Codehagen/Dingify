@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
+import { AddChannelButton } from "@/components/buttons/AddChannelButton";
 import { AddProjectButton } from "@/components/buttons/AddProjectButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
 import EventsDashboard from "@/components/dashboard/EventsDashboard";
@@ -105,7 +106,8 @@ export default async function DashboardPage() {
           // <Button disabled variant="outline">
           //   Add Credits to Add Channel
           // </Button>
-          <AddProjectButton />
+          // <AddProjectButton />
+          <AddChannelButton />
         )}
       </DashboardHeader>
       <div>
