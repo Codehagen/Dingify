@@ -1,6 +1,8 @@
 // actions/create-channel.ts
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
@@ -34,6 +36,8 @@ export async function createChannel(channelName: string) {
     console.log(
       `Created channel with ID: ${newChannel.id} for project ID: ${projects[0]!.id}.`,
     );
+
+    revalidatePath("/dashboard"); // Updates the cache for the dashboard page
 
     return { success: true, channel: newChannel };
   } catch (error) {

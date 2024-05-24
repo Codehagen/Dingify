@@ -1,6 +1,8 @@
 // actions/create-event.js
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
@@ -50,6 +52,9 @@ export async function createEvent(data) {
       channelId: upsertChannel.id,
     },
   });
+
+  // Revalidate the path where the event is displayed
+  revalidatePath("/dashboard");
 
   return { success: true, event: newEvent };
 }
