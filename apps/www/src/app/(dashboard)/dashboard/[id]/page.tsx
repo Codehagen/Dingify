@@ -43,7 +43,7 @@ export default async function ChannelPage({
           text="Let's start working on your channel"
         />
         <div>
-          <NoPhotoPlaceholder slug={params.id} propertyId={channelDetails.id} />
+          <NoPhotoPlaceholder />
         </div>
       </DashboardShell>
     );

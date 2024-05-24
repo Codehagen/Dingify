@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { getGreeting } from "@/lib/utils";
 import Balancer from "react-wrap-balancer";
 
 import { buttonVariants } from "@dingify/ui/components/button";
@@ -12,6 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@dingify/ui/components/card";
+
+import { getGreeting } from "@/lib/utils";
 
 import { cn } from "../../lib/utils";
 import { GetStartedButton } from "../buttons/GetStartedButton";
@@ -69,10 +70,10 @@ export default function HeroSection2() {
             >
               <GetStartedButton />
               <Link
-                href="#"
+                href="/dashboard"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "px-4"
+                  "px-4",
                 )}
               >
                 Explore Dingity

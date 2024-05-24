@@ -1,9 +1,9 @@
 "use client";
 
-import { useSigninModal } from "@/hooks/use-signin-modal";
-import { cn } from "@/lib/utils";
-
 import { Button, buttonVariants } from "@dingify/ui/components/button";
+
+import { cn } from "@/lib/utils";
+import { useSigninModal } from "@/hooks/use-signin-modal";
 
 export function GetStartedButton() {
   const signInModal = useSigninModal();
