@@ -21,13 +21,12 @@ export default async function DashboardLayout({
   }
 
   const userChannels = await getUserChannels();
-  console.log(userChannels);
 
   const sidebarNavItems = [
     ...dashboardConfig.sidebarNav,
     ...userChannels.map((channel) => ({
       title: channel.name,
-      href: `/dashboard/channels/${channel.name.toLowerCase()}`,
+      href: `/dashboard/channels/${channel.id}`, // Use ID instead of name
     })),
   ];
 
