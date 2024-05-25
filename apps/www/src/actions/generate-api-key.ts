@@ -1,6 +1,7 @@
 // actions/generate-api-key.js
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createProjectAndChannel } from "@/actions/create-project-and-channel"; // Import the function
 
 import { prisma } from "@/lib/db";
@@ -36,6 +37,8 @@ export async function generateAndSaveApiKey() {
     console.log(
       `Project and channel created successfully for user ID: ${userId}.`,
     );
+
+    revalidatePath("/dashboard");
 
     return {
       success: true,

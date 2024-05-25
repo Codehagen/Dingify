@@ -23,12 +23,11 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
 
   return (
     <nav className="grid items-start gap-2">
-      {items.map((item, index) => {
+      {items.map((item) => {
         const Icon = Icons[item.icon || "arrowRight"];
         return (
-          <>
+          <div key={item.href}>
             <Link
-              key={index}
               href={
                 item.disabled
                   ? `/`
@@ -48,7 +47,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
             </Link>
             {item.title === "Settings" && (
               <>
-                <Separator key={`separator-${index}`} />
+                <Separator key={`separator-${item.href}`} />
                 <div
                   className={cn(
                     "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
@@ -60,7 +59,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
                 </div>
               </>
             )}
-          </>
+          </div>
         );
       })}
     </nav>
