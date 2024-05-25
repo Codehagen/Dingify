@@ -4,6 +4,8 @@ import { Button } from "@dingify/ui/components/button";
 
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
+import { DocsButton } from "../buttons/DocsButton";
+
 export default function NoPhotoPlaceholder() {
   return (
     <EmptyPlaceholder>
@@ -12,7 +14,11 @@ export default function NoPhotoPlaceholder() {
       <EmptyPlaceholder.Description>
         Your events for this channel will appear here.
       </EmptyPlaceholder.Description>
-      <Button>Comming soon</Button>
+      <div className="space-x-2">
+        <Button>Comming soon</Button>
+
+        <DocsButton />
+      </div>
     </EmptyPlaceholder>
   );
 }
