@@ -73,6 +73,9 @@ cp .env.example .env.local
 ```sh
 # To start the server
 pnpm dev
+
+# To push the DB schema
+pnpm --filter=db db:push
 ```
 
 ## REST-API Installation (optinal)
