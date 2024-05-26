@@ -71,7 +71,7 @@ export function EventDashboardDetailsSheet() {
         });
         console.log("Event created:", result.event); // Log the created event
         // Optionally refresh the page or clear the form
-        // form.reset();
+        form.reset();
       }
     } catch (error) {
       toast({

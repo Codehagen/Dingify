@@ -21,9 +21,11 @@ import {
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
 import { useToast } from "@dingify/ui/components/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function EventsDashboardDetails({ event }) {
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleDelete = async () => {
     try {
@@ -32,6 +34,7 @@ export default function EventsDashboardDetails({ event }) {
         title: "Event Deleted",
         description: "The event has been deleted successfully.",
       });
+      router.refresh();
     } catch (error) {
       toast({
         title: "Error",
@@ -85,7 +88,7 @@ export default function EventsDashboardDetails({ event }) {
                   <span>Export</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={handleDelete}>
+                <DropdownMenuItem onSelect={handleDelete} disabled={!event}>
                   <Trash className="mr-2 h-4 w-4" />
                   <span>Delete</span>
                 </DropdownMenuItem>

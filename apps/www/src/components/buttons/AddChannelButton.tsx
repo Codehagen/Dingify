@@ -41,7 +41,7 @@ export function AddChannelButton() {
       });
 
       // Optionally, you can refresh the page or navigate to the new channel
-      // router.push(`/channel/${result.channel?.id}`);
+      router.push(`/dashboard/channels/${result.channel?.id}`);
     } catch (error) {
       toast({
         title: "Error",
