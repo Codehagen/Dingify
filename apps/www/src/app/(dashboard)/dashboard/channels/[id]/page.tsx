@@ -1,5 +1,6 @@
 import { getChannelDetails } from "@/actions/get-channel-details";
 
+import { ChannelCard } from "@/components/channels/ChannelCard";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
@@ -10,8 +11,6 @@ export default async function ChannelPage({
   params: { id: string };
 }) {
   const channelId = params.id;
-
-  console.log("Channel ID from params:", channelId); // Debugging log
 
   if (!channelId) {
     return (
@@ -25,7 +24,6 @@ export default async function ChannelPage({
   }
 
   try {
-    console.log("Fetching channel details for ID:", channelId); // Debugging log
     const channelDetails = await getChannelDetails(channelId);
 
     if (!channelDetails) {
@@ -35,6 +33,19 @@ export default async function ChannelPage({
             heading="Channel not found"
             text="We couldn't find the channel you're looking for."
           />
+          <NoPhotoPlaceholder />
+        </DashboardShell>
+      );
+    }
+
+    if (channelDetails.events.length === 0) {
+      return (
+        <DashboardShell>
+          <DashboardHeader
+            heading={channelDetails.name}
+            text="This channel has no events yet."
+          />
+          <NoPhotoPlaceholder />
         </DashboardShell>
       );
     }
@@ -46,7 +57,7 @@ export default async function ChannelPage({
           text="Let's start working on your channel"
         />
         <div>
-          <NoPhotoPlaceholder slug={params.id} propertyId={channelDetails.id} />
+          <ChannelCard channelDetails={channelDetails} />
         </div>
       </DashboardShell>
     );
