@@ -12,6 +12,8 @@ export default async function ChannelPage({
 }) {
   const channelId = params.id;
 
+  console.log("Channel ID from params:", channelId); // Debugging log
+
   if (!channelId) {
     return (
       <DashboardShell>

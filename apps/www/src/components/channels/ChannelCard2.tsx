@@ -1,17 +1,10 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { deleteEvent } from "@/actions/delete-event";
 import {
   ChevronDownIcon,
   CircleIcon,
   PlusIcon,
   StarIcon,
 } from "@radix-ui/react-icons";
-import { format } from "date-fns";
-import { BellIcon, BellOffIcon, TrashIcon } from "lucide-react";
 
-import { Badge } from "@dingify/ui/components/badge";
 import { Button } from "@dingify/ui/components/button";
 import {
   Card,
@@ -22,6 +15,7 @@ import {
 } from "@dingify/ui/components/card";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -29,49 +23,23 @@ import {
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
-import { useToast } from "@dingify/ui/components/use-toast";
 
-export function ChannelCard({ channelDetails }) {
-  const { toast } = useToast();
-  const router = useRouter();
-
-  const handleDelete = async (eventId) => {
-    try {
-      await deleteEvent(eventId);
-      toast({
-        title: "Event Deleted",
-        description: "The event has been deleted successfully.",
-      });
-      router.refresh();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was an error deleting the event.",
-        variant: "destructive",
-      });
-      console.error("Error deleting event:", error);
-    }
-  };
-
+export function ChannelCard2({ channelDetails }) {
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {channelDetails.events.map((event) => (
-        <Card key={event.id} className="m-4">
+        <Card key={event.id}>
           <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
             <div className="space-y-1">
-              <CardTitle>
-                {event.name} <span>{event.icon}</span>
-              </CardTitle>
-              <CardDescription>{event.userId}</CardDescription>
+              <CardTitle>{event.name}</CardTitle>
+              <CardDescription>
+                Created At: {new Date(event.createdAt).toLocaleDateString()}
+              </CardDescription>
             </div>
             <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
               <Button variant="secondary" className="px-3 shadow-none">
-                {event.notify ? (
-                  <BellIcon className="mr-1 h-4 w-4" />
-                ) : (
-                  <BellOffIcon className="mr-1 h-4 w-4" />
-                )}
-                Notify
+                <StarIcon className="mr-2 h-4 w-4" />
+                Star
               </Button>
               <Separator orientation="vertical" className="h-[20px]" />
               <DropdownMenu>
@@ -86,15 +54,18 @@ export function ChannelCard({ channelDetails }) {
                   className="w-[200px]"
                   forceMount
                 >
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuLabel>Suggested Lists</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onSelect={() => handleDelete(event.id)}>
-                    <TrashIcon className="mr-2 h-4 w-4" />
-                    <span>Delete</span>
-                  </DropdownMenuItem>
+                  <DropdownMenuCheckboxItem checked>
+                    Future Ideas
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>My Stack</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>
+                    Inspiration
+                  </DropdownMenuCheckboxItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <PlusIcon className="mr-2 h-4 w-4" /> Placeholder
+                    <PlusIcon className="mr-2 h-4 w-4" /> Create List
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -104,13 +75,13 @@ export function ChannelCard({ channelDetails }) {
             <div className="flex space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <CircleIcon className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
-                Placeholder
+                TypeScript
               </div>
               <div className="flex items-center">
                 <StarIcon className="mr-1 h-3 w-3" />
-                Placeholder
+                20k
               </div>
-              <div>{format(new Date(event.createdAt), "dd.MM.yyyy HH:mm")}</div>
+              <div>Updated April 2023</div>
             </div>
           </CardContent>
         </Card>
