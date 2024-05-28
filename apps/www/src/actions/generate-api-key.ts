@@ -4,6 +4,8 @@
 import { revalidatePath } from "next/cache";
 import { createProjectAndChannel } from "@/actions/create-project-and-channel"; // Import the function
 
+import { Unkey } from "@unkey/api";
+
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
@@ -13,12 +15,41 @@ export async function generateAndSaveApiKey() {
   const user = await getCurrentUser();
   const userId = user?.id;
 
+  if (!process.env.UNKEY_ROOT_KEY) {
+    console.error("UNKEY_ROOT_KEY environment variable is not set.");
+    return {
+      success: false,
+      error: "UNKEY_ROOT_KEY environment variable is not set.",
+    };
+  }
+
+  const unkey = new Unkey({ rootKey: process.env.UNKEY_ROOT_KEY });
+
   if (!userId) {
     console.error("No user is currently logged in.");
     return { success: false, error: "User not authenticated" };
   }
 
-  const apiKey = generateApiKey();
+  const { result } = await unkey.keys.create({
+    apiId: "api_3Sw97gepmEHFKTepgM5GaFxy8cWG",
+    prefix: "ding",
+    ownerId: userId,
+    ratelimit: {
+      type: "fast",
+      limit: 10,
+      refillRate: 1,
+      refillInterval: 1000,
+    },
+    enabled: true,
+  });
+
+  if (!result) {
+    console.error("Error creating API key.");
+    return { success: false, error: "Error creating API key." };
+  }
+
+  const apiKey = result.key;
+
   console.log(`Generated API key for user ID: ${userId}. API Key: ${apiKey}`);
 
   try {
