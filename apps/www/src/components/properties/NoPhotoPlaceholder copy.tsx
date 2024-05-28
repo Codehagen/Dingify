@@ -1,18 +1,24 @@
 "use client";
 
-import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
-
 import { Button } from "@dingify/ui/components/button";
 
-export default function NoPhotoPlaceholder({ propertyId, slug }) {
+import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+
+import { DocsButton } from "../buttons/DocsButton";
+
+export default function NoPhotoPlaceholder() {
   return (
     <EmptyPlaceholder>
-      <EmptyPlaceholder.Icon name="media" />
-      <EmptyPlaceholder.Title>Upload pictures</EmptyPlaceholder.Title>
+      <EmptyPlaceholder.Icon name="party" />
+      <EmptyPlaceholder.Title>Your events</EmptyPlaceholder.Title>
       <EmptyPlaceholder.Description>
-        Upload pictures to start and let us create the text
+        Your events for this channel will appear here.
       </EmptyPlaceholder.Description>
-      <Button />
+      <div className="space-x-2">
+        <Button>Comming soon</Button>
+
+        <DocsButton />
+      </div>
     </EmptyPlaceholder>
   );
 }

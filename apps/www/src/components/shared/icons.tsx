@@ -18,6 +18,7 @@ import {
   LucideProps,
   Moon,
   MoreVertical,
+  PartyPopper,
   PieChart,
   Plus,
   Puzzle,
@@ -26,6 +27,7 @@ import {
   Settings,
   SunMedium,
   Trash,
+  Ungroup,
   User,
   X,
 } from "lucide-react";
@@ -59,6 +61,9 @@ export const Icons = {
   piechart: PieChart,
   chevrondown: ChevronDown,
   brain: BrainCircuit,
+  ungroup: Ungroup,
+  party: PartyPopper,
+  piecart: PieChart,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

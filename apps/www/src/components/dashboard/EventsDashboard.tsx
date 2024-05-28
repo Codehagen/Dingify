@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
+import { DocsButton } from "../buttons/DocsButton";
 import { EventDashboardDetailsSheet } from "./EventsDashboardComponents/EventDashboardDetailsSheet";
 import EventsDashboardCards from "./EventsDashboardComponents/EventsDashboardCards";
 import EventsDashboardDetails from "./EventsDashboardComponents/EventsDashboardDetails";
@@ -34,7 +35,10 @@ export default function EventsDashboard({ events, eventStats }) {
             <EmptyPlaceholder.Description>
               You need to create an event first to see it here
             </EmptyPlaceholder.Description>
-            <EventDashboardDetailsSheet />
+            <div className="space-x-2">
+              <EventDashboardDetailsSheet />
+              <DocsButton />
+            </div>
           </EmptyPlaceholder>
         )}
       </div>

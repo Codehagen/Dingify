@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { LanguageForm2 } from "@/components/forms/language-form2";
 import { UserNameForm } from "@/components/forms/user-name-form";
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
 
 export const metadata = {
   title: "Dingify Settings - Customize Your Experience",
@@ -29,9 +31,9 @@ export default async function SettingsPage() {
         heading="Settings"
         text="Manage account and website settings."
       />
+      <AddApiKeyButton />
       <div className="grid gap-10">
         <UserNameForm user={{ id: user.id, name: user.name || "" }} />
-        <LanguageForm2 user={user} />
       </div>
     </DashboardShell>
   );

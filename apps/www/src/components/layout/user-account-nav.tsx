@@ -2,8 +2,13 @@
 
 import type { User } from "next-auth";
 import Link from "next/link";
-import { UserAvatar } from "@/components/shared/user-avatar";
-import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import {
+  Book,
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+} from "lucide-react";
 import { signOut } from "next-auth/react";
 
 import {
@@ -13,6 +18,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
+
+import { UserAvatar } from "@/components/shared/user-avatar";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">;
@@ -43,6 +50,15 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           <Link href="/dashboard" className="flex items-center space-x-2.5">
             <LayoutDashboard className="h-4 w-4" />
             <p className="text-sm">Dashboard</p>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="https://docs.dingify.io/"
+            className="flex items-center space-x-2.5"
+          >
+            <Book className="h-4 w-4" />
+            <p className="text-sm">Docs</p>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
