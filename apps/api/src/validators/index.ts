@@ -22,8 +22,8 @@ export const EventSchema = z
       description: "The channel name associated with the event.",
       example: "Main Channel",
     }),
-    user_id: z.string().openapi({
-      description: "Accociated ID that you want to have on the user",
+    userId: z.string().openapi({
+      description: "Associated ID that you want to have on the user",
       example: "user999 OR John Doe",
     }),
     icon: z.string().optional().openapi({
@@ -56,6 +56,10 @@ export const EventCreateSchema = z
     channel: z.string().openapi({
       description: "The channel name where the event is registered.",
       example: "new-channel-name",
+    }),
+    userId: z.string().openapi({
+      description: "The ID of the user associated with the event.",
+      example: "user-999",
     }),
     icon: z.string().optional().openapi({
       description: "An optional icon representing the event.",
