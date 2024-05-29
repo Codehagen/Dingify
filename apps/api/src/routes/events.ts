@@ -30,7 +30,7 @@ events.post("/", async (c) => {
     const eventData = EventSchema.parse(await c.req.json());
 
     // Destructure validated data
-    const { channel, name, icon, notify, tags, user_id } = eventData;
+    const { channel, name, icon, notify, tags, userId } = eventData;
 
     // Find the user's project
     const project = await prisma(c.env).project.findFirst({
@@ -81,7 +81,7 @@ events.post("/", async (c) => {
       data: {
         name: name || "",
         channelId: channelExists.id,
-        userId: user_id,
+        userId: userId,
         icon: icon || "",
         notify,
         tags: tags || {},
