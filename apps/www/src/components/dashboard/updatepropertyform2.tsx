@@ -19,7 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@dingify/ui/components/card";
-import { useToast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 // Define your schema as per your requirements
 const propertyFormSchema = z.object({
@@ -32,7 +32,6 @@ const propertyFormSchema = z.object({
 });
 
 export function UpdatePropertyForm2({ defaultValues, propertyId }) {
-  const { toast } = useToast(); // Using the toast hook
   const [isLoading, setIsLoading] = useState(false); // Add this line
   const form = useForm({
     resolver: zodResolver(propertyFormSchema),
@@ -44,18 +43,12 @@ export function UpdatePropertyForm2({ defaultValues, propertyId }) {
     try {
       const response = await updatePropertyDetails(propertyId, data);
       if (response.success) {
-        toast({
-          title: "Success!",
-          description: "Property details updated successfully.",
-        });
+        toast.success("Property details updated successfully.");
       } else {
         throw new Error(response.error);
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update property details.",
-      });
+      toast.error("Failed to update property details.");
     }
     setIsLoading(false); // Stop loading
   };

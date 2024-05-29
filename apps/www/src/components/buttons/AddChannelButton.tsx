@@ -16,13 +16,12 @@ import {
 } from "@dingify/ui/components/dialog";
 import { Input } from "@dingify/ui/components/input";
 import { Label } from "@dingify/ui/components/label";
-import { useToast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 export function AddChannelButton() {
   const [channelName, setChannelName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,19 +34,12 @@ export function AddChannelButton() {
         throw new Error(result.error || "Failed to add channel");
       }
 
-      toast({
-        title: "Channel Created",
-        description: `Channel "${channelName}" created successfully.`,
-      });
+      toast.success(`Channel "${channelName}" created successfully.`);
 
       // Optionally, you can refresh the page or navigate to the new channel
       router.push(`/dashboard/channels/${result.channel?.id}`);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
       console.error(error);
     } finally {
       setIsLoading(false);

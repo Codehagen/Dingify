@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { buttonVariants } from "@dingify/ui/components/button";
 import { Input } from "@dingify/ui/components/input";
 import { Label } from "@dingify/ui/components/label";
-import { toast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
@@ -44,19 +44,11 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
 
     setIsLoading(false);
 
-    // TODO: replace shadcn toast by react-hot-toast
     if (!signInResult?.ok) {
-      return toast({
-        title: "Something went wrong.",
-        description: "Your sign in request failed. Please try again.",
-        variant: "destructive",
-      });
+      return toast.error("Your sign in request failed. Please try again.");
     }
 
-    return toast({
-      title: "Check your email",
-      description: "We sent you a login link. Be sure to check your spam too.",
-    });
+    return toast.success("We sent you a login link. Be sure to check your spam too.");
   }
 
   return (

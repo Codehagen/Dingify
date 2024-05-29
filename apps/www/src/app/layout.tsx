@@ -9,7 +9,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-import { Toaster } from "@dingify/ui/components/toaster";
+import { Toaster } from "@dingify/ui/components/sonner"
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <Analytics />
           <Toaster />
-          <ModalProvider />
+           <ModalProvider />
           <TailwindIndicator />
         </Providers>
       </body>

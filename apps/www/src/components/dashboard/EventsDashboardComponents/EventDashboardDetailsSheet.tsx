@@ -28,7 +28,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@dingify/ui/components/sheet";
-import { useToast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 // Define the validation schema
 const FormSchema = z.object({
@@ -41,7 +41,6 @@ const FormSchema = z.object({
 });
 
 export function EventDashboardDetailsSheet() {
-  const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -59,26 +58,21 @@ export function EventDashboardDetailsSheet() {
     try {
       const result = await createEvent(data);
       if (result.success) {
-        toast({
-          title: "Event Created",
-          description: (
+        toast.message(
+          <div className="flex flex-col">
+            <span>Event Created.</span>
             <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
               <code className="text-white">
                 {JSON.stringify(data, null, 2)}
               </code>
             </pre>
-          ),
-        });
+          </div>);
         console.log("Event created:", result.event); // Log the created event
         // Optionally refresh the page or clear the form
         form.reset();
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was an error creating the event.",
-        variant: "destructive",
-      });
+      toast.error("There was an error creating the event.");
       console.error("Error creating event:", error); // Log any error
     }
   };

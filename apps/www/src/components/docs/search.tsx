@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 import { Input } from "@dingify/ui/components/input";
-import { toast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 type DocsSearchProps = React.HTMLAttributes<HTMLFormElement>;
 
@@ -12,10 +12,7 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
   function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    return toast({
-      title: "Not implemented",
-      description: "We're still working on the search.",
-    });
+    return toast.info("We're still working on the search.")
   }
 
   return (

@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@dingify/ui/components/select";
-import { toast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 const languageSchema = z.object({
   language: z.string({
@@ -49,19 +49,13 @@ export function LanguageForm2({ user }) {
       const response = await updateUserLanguage(data.language);
       console.log("Update response:", response); // Check the response from the update call
       if (response.success) {
-        toast({
-          title: "Success",
-          description: "Language updated successfully.",
-        });
+        toast.success("Language updated successfully.");
       } else {
         throw new Error(response.error);
       }
     } catch (error) {
       console.error("Update error:", error); // Log any caught errors
-      toast({
-        title: "Error",
-        description: error.message || "Failed to update language.",
-      });
+      toast.error(error.message || "Failed to update language.");
     } finally {
       setPending(false);
     }
