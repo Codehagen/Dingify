@@ -63,6 +63,7 @@ export const Icons = {
   brain: BrainCircuit,
   ungroup: Ungroup,
   party: PartyPopper,
+  piecart: PieChart,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
