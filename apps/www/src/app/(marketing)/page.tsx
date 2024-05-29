@@ -1,22 +1,25 @@
 import Link from "next/link";
+import Balancer from "react-wrap-balancer";
+
+import { buttonVariants } from "@dingify/ui/components/button";
+
+import { siteConfig } from "@/config/site";
+import { cn, nFormatter } from "@/lib/utils";
 import { GetStartedButton } from "@/components/buttons/GetStartedButton";
+import { BeamSection } from "@/components/dashboard/beam-section";
 import { BusinessLine } from "@/components/dashboard/businessline";
 import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
 import HeroSection from "@/components/dashboard/herosection";
 import HeroSection2 from "@/components/dashboard/herosection2";
 import { Icons } from "@/components/shared/icons";
-import { siteConfig } from "@/config/site";
-import { cn, nFormatter } from "@/lib/utils";
-import Balancer from "react-wrap-balancer";
-
-import { buttonVariants } from "@dingify/ui/components/button";
 
 export default async function IndexPage() {
   return (
     <>
       <HeroSection />
       <HeroSection2 />
+      {/* <BeamSection /> */}
       {/* <section className="space-y-6 pb-12 pt-16 lg:py-28">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
           <Link

@@ -90,7 +90,10 @@ events.post("/", async (c) => {
 
     await sendDiscordNotification(`New event logged: ${name}`);
 
-    return c.json({ ok: true, message: "Event logged!", event: savedEvent });
+    return c.json(
+      { ok: true, message: "Event logged!", event: savedEvent },
+      201,
+    ); // Return 201 status code
   } catch (error: any) {
     return c.json(
       {
