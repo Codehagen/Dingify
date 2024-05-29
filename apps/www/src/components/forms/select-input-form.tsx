@@ -23,7 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@dingify/ui/components/card";
-import { toast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 export function SelectInputForm({ options, image }) {
   const router = useRouter();
@@ -50,23 +50,14 @@ export function SelectInputForm({ options, image }) {
       if (!result.success) {
         // If an error occurs, log it and display a toast notification
         console.error("Failed to update the selected option:", result.error);
-        toast({
-          title: "Error",
-          description:
-            "Failed to update the selected option. Please try again.",
-          variant: "destructive", // or any other variant you have for error messages
-        });
+        toast.error("Failed to update the selected option. Please try again.");
       } else {
         router.refresh();
         console.log("Selected option updated successfully");
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("An unexpected error occurred. Please try again.");
     }
   };
 

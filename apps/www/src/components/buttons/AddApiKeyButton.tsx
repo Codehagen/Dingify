@@ -21,14 +21,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@dingify/ui/components/tooltip";
-import { useToast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 export function AddApiKeyButton() {
   const [apiKey, setApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
   const [showKey, setShowKey] = useState(false);
-  const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
@@ -46,17 +45,11 @@ export function AddApiKeyButton() {
 
     if (response.success) {
       setApiKey(response.apiKey as string);
-      toast({
-        title: "API Key Generated",
-        description: "Your new API key has been generated successfully.",
-      });
+      
+      toast.success("Your new API key has been generated successfully.");
     } else {
       console.error(response.error);
-      toast({
-        title: "Error",
-        description: "There was an error generating the API key.",
-        variant: "destructive",
-      });
+      toast.error("There was an error generating the API key.");
     }
 
     setIsLoading(false);
@@ -66,10 +59,7 @@ export function AddApiKeyButton() {
     e.preventDefault();
     navigator.clipboard.writeText(apiKey);
     setHasCopied(true);
-    toast({
-      title: "Copied",
-      description: "API key has been copied to clipboard.",
-    });
+    toast.success("API key has been copied to clipboard.");
   };
 
   return (

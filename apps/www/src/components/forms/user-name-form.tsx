@@ -21,7 +21,7 @@ import {
 } from "@dingify/ui/components/card";
 import { Input } from "@dingify/ui/components/input";
 import { Label } from "@dingify/ui/components/label";
-import { toast } from "@dingify/ui/components/use-toast";
+import { toast } from "sonner";
 
 interface UserNameFormProps {
   user: Pick<User, "id" | "name">;
@@ -47,15 +47,9 @@ export function UserNameForm({ user }: UserNameFormProps) {
       const { status } = await updateUserNameWithId(data);
 
       if (status !== "success") {
-        toast({
-          title: "Something went wrong.",
-          description: "Your name was not updated. Please try again.",
-          variant: "destructive",
-        });
+        toast.error("Your name was not updated. Please try again.");
       } else {
-        toast({
-          description: "Your name has been updated.",
-        });
+        toast.success("Your name has been updated.");
       }
     });
   });
