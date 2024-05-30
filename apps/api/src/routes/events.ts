@@ -76,17 +76,72 @@ events.post("/", async (c) => {
       );
     }
 
-    // Create the event
+    // Check if the customer exists based on user_id and project_id
+    let customer = await prisma(c.env).customer.findUnique({
+      where: {
+        userId_projectId: {
+          userId: userId,
+          projectId: project.id,
+        },
+      },
+    });
+
+    // If the customer does not exist, create a new customer
+    if (!customer) {
+      try {
+        customer = await prisma(c.env).customer.create({
+          data: {
+            projectId: project.id,
+            userId: userId,
+            name: "", // Assuming name and email are optional
+            email: "",
+            createdAt: new Date(),
+          },
+        });
+        console.log("New customer created:", customer); // Log the new customer
+      } catch (error) {
+        console.error("Error creating customer:", error);
+        throw error;
+      }
+    } else {
+      console.log("Existing customer found:", customer); // Log the existing customer
+    }
+
+    // Create the event and associate it with the customer
     const savedEvent = await prisma(c.env).event.create({
       data: {
         name: name || "",
         channelId: channelExists.id,
-        userId: userId,
+        userId: userId, // userId here is a plain string
         icon: icon || "",
         notify,
         tags: tags || {},
+        customerId: customer.id, // Associate the event with the customer
       },
     });
+
+    console.log("New event created:", savedEvent); // Log the new event
+
+    // Update logs metrics for the project
+    const metrics = await prisma(c.env).metrics.findUnique({
+      where: { projectId: project.id },
+    });
+
+    if (metrics) {
+      await prisma(c.env).metrics.update({
+        where: { id: metrics.id },
+        data: {
+          logsUsed: { increment: 1 },
+        },
+      });
+      // Fetch the updated metrics and log them
+      const updatedMetrics = await prisma(c.env).metrics.findUnique({
+        where: { id: metrics.id },
+      });
+      console.log("Updated metrics:", updatedMetrics);
+    } else {
+      console.error("Metrics not found for the project");
+    }
 
     await sendDiscordNotification(`New event logged: ${name}`);
 
@@ -102,92 +157,6 @@ events.post("/", async (c) => {
         error: parsePrismaError(error),
       },
       400,
-    );
-  }
-});
-
-// GET - Retrieve Events
-events.get("/", async (c) => {
-  const apiKey = c.req.header("x-api-key");
-  if (!apiKey) {
-    return c.json({ ok: false, message: "API key is required" }, 401);
-  }
-
-  // Find user by API key
-  const user = await prisma(c.env).user.findUnique({
-    where: { apiKey },
-  });
-
-  if (!user) {
-    return c.json({ ok: false, message: "Invalid API key" }, 401);
-  }
-
-  try {
-    console.log("User ID for event retrieval:", user.id); // Log the user ID
-
-    // Find projects for the user
-    const projects = await prisma(c.env).project.findMany({
-      where: {
-        userId: user.id,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (projects.length === 0) {
-      return c.json(
-        {
-          ok: false,
-          message: "No projects found for this user.",
-        },
-        404,
-      );
-    }
-
-    const projectIds = projects.map((project) => project.id);
-
-    // Find channels in those projects
-    const channels = await prisma(c.env).channel.findMany({
-      where: {
-        projectId: { in: projectIds },
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (channels.length === 0) {
-      return c.json(
-        {
-          ok: false,
-          message: "No channels found in the user's projects.",
-        },
-        404,
-      );
-    }
-
-    const channelIds = channels.map((channel) => channel.id);
-
-    // Retrieve events for those channels
-    const events = await prisma(c.env).event.findMany({
-      where: {
-        channelId: { in: channelIds },
-      },
-    });
-
-    console.log("Retrieved events:", events); // Log the retrieved events
-
-    return c.json({ ok: true, events });
-  } catch (error: any) {
-    console.error("Failed to retrieve events:", error);
-    return c.json(
-      {
-        ok: false,
-        message: "Failed to retrieve events",
-        error: error.message || "Unknown error",
-      },
-      500,
     );
   }
 });

@@ -36,6 +36,22 @@ export async function createProjectAndChannel(projectName) {
       `Created channel with ID: ${newChannel.id} for project ID: ${newProject.id}.`,
     );
 
+    // Create a metrics record for the new project
+    const newMetrics = await prisma.metrics.create({
+      data: {
+        projectId: newProject.id,
+        logsUsed: 0,
+        logsLimit: 1000,
+        channelsUsed: 1,
+        channelsLimit: 3,
+        seatsUsed: 1,
+        projectsUsed: 1,
+      },
+    });
+    console.log(
+      `Created metrics with ID: ${newMetrics.id} for project ID: ${newProject.id}.`,
+    );
+
     return { success: true, project: newProject, channel: newChannel };
   } catch (error) {
     console.error(

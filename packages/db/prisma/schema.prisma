@@ -3,10 +3,8 @@ generator client {
   previewFeatures = ["driverAdapters"]
 }
 
-// prisma/schema.prisma
 datasource db {
-  provider = "postgresql"
-
+  provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
@@ -45,22 +43,24 @@ model Session {
 }
 
 model User {
-  id                   String                @id @default(cuid())
-  name                 String?
-  email                String?               @unique
-  emailVerified        DateTime?
-  apiKey               String?               @unique
-  plan                 String                @default("basic")
-  credits              Int                   @default(3)
-  image                String?
-  language             String?               @default("english")
-  onboardingEmailSent  Boolean               @default(false)
-  createdAt            DateTime              @default(now()) @map(name: "created_at")
-  updatedAt            DateTime              @default(now()) @map(name: "updated_at")
+  id                  String    @id @default(cuid())
+  name                String?
+  email               String?   @unique
+  emailVerified       DateTime?
+  apiKey              String?   @unique
+  plan                String    @default("basic")
+  credits             Int       @default(3)
+  image               String?
+  language            String?   @default("english")
+  onboardingEmailSent Boolean   @default(false)
+
   accounts             Account[]
   sessions             Session[]
   projects             Project[]
   notificationSettings NotificationSetting[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -80,12 +80,16 @@ model VerificationToken {
 }
 
 model Project {
-  id        String    @id @default(cuid())
-  name      String
-  userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  id     String @id @default(cuid())
+  name   String
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
   channels  Channel[]
-  createdAt DateTime  @default(now())
+  metrics   Metrics[]
+  customers Customer[]
+
+  createdAt DateTime @default(now())
 
   @@map(name: "projects")
 }
@@ -103,17 +107,47 @@ model Channel {
 }
 
 model Event {
-  id        String   @id @default(cuid())
-  name      String
-  channelId String
-  channel   Channel  @relation(fields: [channelId], references: [id])
-  userId    String
-  icon      String
-  notify    Boolean
-  tags      Json
-  createdAt DateTime @default(now())
+  id         String    @id @default(cuid())
+  name       String
+  channelId  String
+  channel    Channel   @relation(fields: [channelId], references: [id])
+  userId     String
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  icon       String
+  notify     Boolean
+  tags       Json
+  createdAt  DateTime  @default(now())
 
   @@map(name: "events")
+}
+
+model Metrics {
+  id            String  @id @default(cuid())
+  projectId     String  @unique
+  logsUsed      Int     @default(0)
+  logsLimit     Int     @default(1000)
+  channelsUsed  Int     @default(1)
+  channelsLimit Int     @default(3)
+  seatsUsed     Int     @default(1)
+  projectsUsed  Int     @default(1)
+  project       Project @relation(fields: [projectId], references: [id])
+
+  @@map(name: "metrics")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  name      String?
+  email     String?
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  events    Event[]
+
+  @@unique([userId, projectId])
+  @@map(name: "customers")
 }
 
 model NotificationSetting {
@@ -134,4 +168,4 @@ enum NotificationType {
   MOBILE
 }
 
-//if we need full reset :  npx prisma db push --force-reset
+// if we need full reset : npx prisma db push --force-reset

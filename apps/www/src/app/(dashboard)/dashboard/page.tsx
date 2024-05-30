@@ -42,6 +42,16 @@ export default async function DashboardPage() {
   // Extract project IDs
   const projectIds = projects.map((project) => project.id);
 
+  // Fetch customers associated with the user's projects
+  const customers = await prisma.customer.findMany({
+    where: {
+      projectId: {
+        in: projectIds,
+      },
+    },
+  });
+  console.log(customers);
+
   // Fetch channels for the user's projects
   const channels = await prisma.channel.findMany({
     where: {

@@ -1,52 +1,48 @@
-import { getChannelDetails } from "@/actions/get-channel-details";
+import { getCustomerDetails } from "@/actions/get-customer-details";
 
-import { ChannelCard } from "@/components/channels/ChannelCard";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
-import { UsersCard } from "@/components/users/UsersCard";
+import UserCard from "@/components/users/UserCard";
 
-export default async function ChannelPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const channelId = params.id;
+export default async function UserPage({ params }: { params: { id: string } }) {
+  const customerId = params.id;
 
-  console.log("Channel ID from params:", channelId); // Debugging log
+  console.log("Customer ID from params:", customerId); // Debugging log
 
-  if (!channelId) {
+  if (!customerId) {
     return (
       <DashboardShell>
         <DashboardHeader
-          heading="Channel not found"
-          text="Invalid channel ID."
+          heading="Customer not found"
+          text="Invalid customer ID."
         />
       </DashboardShell>
     );
   }
 
   try {
-    const channelDetails = await getChannelDetails(channelId);
+    const customerDetails = await getCustomerDetails(customerId);
+    console.log("Customer details:", customerDetails); // Debugging log
 
-    if (!channelDetails) {
+    if (!customerDetails) {
       return (
         <DashboardShell>
           <DashboardHeader
-            heading="Channel not found"
-            text="We couldn't find the channel you're looking for."
+            heading="Customer not found"
+            text="We couldn't find the customer you're looking for."
           />
           <NoPhotoPlaceholder />
         </DashboardShell>
       );
     }
 
-    if (channelDetails.events.length === 0) {
+    if (customerDetails.events.length === 0) {
       return (
         <DashboardShell>
           <DashboardHeader
-            heading={channelDetails.name}
-            text="This channel has no events yet."
+            heading={customerDetails.name || "Unnamed Customer"}
+            text="This customer has no events yet."
           />
           <NoPhotoPlaceholder />
         </DashboardShell>
@@ -56,11 +52,11 @@ export default async function ChannelPage({
     return (
       <DashboardShell>
         <DashboardHeader
-          heading={channelDetails.name}
-          text="Let's start working on your channel"
+          heading={customerDetails.name || "Unnamed Customer"}
+          text="Customer details and events"
         />
         <div>
-          <UsersCard channelDetails={channelDetails} />
+          <UserCard />
         </div>
       </DashboardShell>
     );
