@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 import { Badge } from "@dingify/ui/components/badge";
 import { Button } from "@dingify/ui/components/button";
 import {
@@ -37,6 +39,12 @@ export default function EventsDashboardTable({
   setSelectedEventId,
   selectedEventId,
 }) {
+  const router = useRouter();
+
+  const handleUserClick = (userId) => {
+    router.push(`dashboard/users/${userId}`);
+  };
+
   return (
     <>
       <Tabs defaultValue="week">
@@ -122,7 +130,11 @@ export default function EventsDashboardTable({
                         {event.name}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
+                        <Badge
+                          className="cursor-pointer text-xs"
+                          variant="secondary"
+                          onClick={() => handleUserClick(event.userId)}
+                        >
                           {event.userId}
                         </Badge>
                       </TableCell>

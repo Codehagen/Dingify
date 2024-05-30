@@ -30,7 +30,7 @@ export default function EventsDashboard({ events, eventStats }) {
           />
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
+            <EmptyPlaceholder.Icon name="party" />
             <EmptyPlaceholder.Title>There are no events</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
               You need to create an event first to see it here
