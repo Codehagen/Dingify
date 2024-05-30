@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { deleteCustomer } from "@/actions/delete-customer";
 import { ChevronDownIcon, PlusIcon, StarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { CircleIcon, TrashIcon } from "lucide-react";
@@ -25,13 +26,15 @@ import {
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
 
+import { EditCustomerSheet } from "./EditCustomerSheet";
+
 export function AllUsersCards({ customerDetails }) {
   const router = useRouter();
 
   const handleDelete = async (customerId) => {
     // Add logic to delete customer if needed
     try {
-      // await deleteCustomer(customerId);
+      deleteCustomer(customerId);
       toast.success("The customer has been deleted successfully.");
       router.refresh();
     } catch (error) {
@@ -67,14 +70,7 @@ export function AllUsersCards({ customerDetails }) {
               <CardDescription>{customer.email || "No email"}</CardDescription>
             </div>
             <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-              <Button
-                variant="secondary"
-                className="px-3 shadow-none"
-                onClick={() => handleEdit(customer.id)}
-              >
-                <StarIcon className="mr-1 h-4 w-4" />
-                Edit
-              </Button>
+              <EditCustomerSheet customer={customer} />
               <Separator orientation="vertical" className="h-[20px]" />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
