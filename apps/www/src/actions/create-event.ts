@@ -89,6 +89,27 @@ export async function createEvent(data) {
 
     console.log("New event created:", newEvent); // Log the new event
 
+    // Update logs metrics for the project
+    const metrics = await prisma.metrics.findUnique({
+      where: { projectId: project.id },
+    });
+
+    if (metrics) {
+      await prisma.metrics.update({
+        where: { id: metrics.id },
+        data: {
+          logsUsed: { increment: 1 },
+        },
+      });
+      // Fetch the updated metrics and log them
+      const updatedMetrics = await prisma.metrics.findUnique({
+        where: { id: metrics.id },
+      });
+      console.log("Updated metrics:", updatedMetrics);
+    } else {
+      console.error("Metrics not found for the project");
+    }
+
     // Revalidate the path where the event is displayed
     revalidatePath("/dashboard");
 

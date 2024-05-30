@@ -3,6 +3,7 @@ import { getCustomerDetails } from "@/actions/get-customer-details";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
+import UserCard from "@/components/users/UserCard";
 
 export default async function UserPage({ params }: { params: { id: string } }) {
   const customerId = params.id;
@@ -54,7 +55,9 @@ export default async function UserPage({ params }: { params: { id: string } }) {
           heading={customerDetails.name || "Unnamed Customer"}
           text="Customer details and events"
         />
-        <div>Here we will put the new component</div>
+        <div>
+          <UserCard />
+        </div>
       </DashboardShell>
     );
   } catch (error) {

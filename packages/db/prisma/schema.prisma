@@ -124,7 +124,7 @@ model Event {
 
 model Metrics {
   id            String  @id @default(cuid())
-  projectId     String
+  projectId     String  @unique
   logsUsed      Int     @default(0)
   logsLimit     Int     @default(1000)
   channelsUsed  Int     @default(1)

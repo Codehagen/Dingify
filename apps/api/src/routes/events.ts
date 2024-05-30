@@ -120,6 +120,29 @@ events.post("/", async (c) => {
       },
     });
 
+    console.log("New event created:", savedEvent); // Log the new event
+
+    // Update logs metrics for the project
+    const metrics = await prisma(c.env).metrics.findUnique({
+      where: { projectId: project.id },
+    });
+
+    if (metrics) {
+      await prisma(c.env).metrics.update({
+        where: { id: metrics.id },
+        data: {
+          logsUsed: { increment: 1 },
+        },
+      });
+      // Fetch the updated metrics and log them
+      const updatedMetrics = await prisma(c.env).metrics.findUnique({
+        where: { id: metrics.id },
+      });
+      console.log("Updated metrics:", updatedMetrics);
+    } else {
+      console.error("Metrics not found for the project");
+    }
+
     await sendDiscordNotification(`New event logged: ${name}`);
 
     return c.json(
