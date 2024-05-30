@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
 
 import { Badge } from "@dingify/ui/components/badge";
-import { Button } from "@dingify/ui/components/button";
 import {
   Card,
   CardContent,
@@ -10,15 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@dingify/ui/components/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@dingify/ui/components/dropdown-menu";
-import { Progress } from "@dingify/ui/components/progress";
 import {
   Table,
   TableBody,
@@ -34,6 +24,8 @@ import {
   TabsTrigger,
 } from "@dingify/ui/components/tabs";
 
+import { UserBadge } from "@/components/UserBadge";
+
 export default function EventsDashboardTable({
   events,
   setSelectedEventId,
@@ -41,8 +33,8 @@ export default function EventsDashboardTable({
 }) {
   const router = useRouter();
 
-  const handleUserClick = (userId) => {
-    router.push(`dashboard/users/${userId}`);
+  const handleUserClick = (customerId) => {
+    router.push(`dashboard/users/${customerId}`);
   };
 
   return (
@@ -130,13 +122,12 @@ export default function EventsDashboardTable({
                         {event.name}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <Badge
-                          className="cursor-pointer text-xs"
-                          variant="secondary"
-                          onClick={() => handleUserClick(event.userId)}
-                        >
-                          {event.userId}
-                        </Badge>
+                        <UserBadge
+                          customerId={event.customerId}
+                          userId={event.userId}
+                          onClick={handleUserClick}
+                          variant={"secondary"}
+                        />
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
                         {event.icon}

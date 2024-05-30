@@ -88,6 +88,7 @@ export default async function DashboardPage() {
       tags: true,
       notify: true,
       createdAt: true,
+      customerId: true,
       channel: {
         select: {
           name: true,

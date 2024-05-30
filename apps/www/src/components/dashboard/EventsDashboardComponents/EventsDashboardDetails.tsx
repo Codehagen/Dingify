@@ -1,5 +1,7 @@
+import { useRouter } from "next/navigation";
 import { deleteEvent } from "@/actions/delete-event";
 import { File, Pencil, Trash } from "lucide-react";
+import { toast } from "sonner";
 
 import { Badge } from "@dingify/ui/components/badge";
 import { Button } from "@dingify/ui/components/button";
@@ -20,8 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+
+import { UserBadge } from "@/components/UserBadge";
 
 export default function EventsDashboardDetails({ event }) {
   const router = useRouter();
@@ -36,6 +38,11 @@ export default function EventsDashboardDetails({ event }) {
       console.error("Error deleting event:", error);
     }
   };
+
+  const handleUserClick = (customerId) => {
+    router.push(`dashboard/users/${customerId}`);
+  };
+
   return (
     <>
       <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
@@ -120,9 +127,12 @@ export default function EventsDashboardDetails({ event }) {
               <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">User</span>
                 <span>
-                  <Badge className="text-xs" variant="outline">
-                    {event?.userId}
-                  </Badge>
+                  <UserBadge
+                    customerId={event?.customerId}
+                    userId={event?.userId}
+                    onClick={handleUserClick}
+                    variant="outline"
+                  />
                 </span>
               </li>
               <li className="flex items-center justify-between">
