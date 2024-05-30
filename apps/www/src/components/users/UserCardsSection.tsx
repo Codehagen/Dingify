@@ -1,3 +1,5 @@
+import { format, formatDistanceToNow } from "date-fns";
+
 import {
   Card,
   CardContent,
@@ -5,12 +7,14 @@ import {
   CardTitle,
 } from "@dingify/ui/components/card";
 
-export default function UserCardsSection() {
+export default function UserCardsSection({ customerDetails }) {
+  console.log("Customer details in UserCardsSection:", customerDetails); // Debugging log
+
   return (
-    <div className="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
+    <div className="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+      {/* <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Today's Users</CardTitle>
+          <CardTitle className="text-sm font-medium">First Seen</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -25,10 +29,19 @@ export default function UserCardsSection() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">14</div>
-          <p className="text-xs text-muted-foreground">New users today</p>
+          <div className="text-2xl font-bold">
+            {" "}
+            {customerDetails.firstSeen
+              ? formatDistanceToNow(new Date(customerDetails.firstSeen), {
+                  addSuffix: true,
+                })
+              : "N/A"}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Since the user was made
+          </p>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
@@ -50,11 +63,20 @@ export default function UserCardsSection() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">28</div>
-          <p className="text-xs text-muted-foreground">New users this week</p>
+          <div className="text-2xl font-bold">
+            {" "}
+            {customerDetails.firstSeen
+              ? formatDistanceToNow(new Date(customerDetails.firstSeen), {
+                  addSuffix: true,
+                })
+              : "N/A"}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Since the user was made
+          </p>
         </CardContent>
       </Card>
-      <Card>
+      {/* <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             This Month's Users
@@ -77,10 +99,10 @@ export default function UserCardsSection() {
           <div className="text-2xl font-bold">114</div>
           <p className="text-xs text-muted-foreground">New users this month</p>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">All Users</CardTitle>
+          <CardTitle className="text-sm font-medium">Last Seen</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -95,8 +117,14 @@ export default function UserCardsSection() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">573</div>
-          <p className="text-xs text-muted-foreground">Total users</p>
+          <div className="text-2xl font-bold">
+            {customerDetails.lastSeen
+              ? formatDistanceToNow(new Date(customerDetails.lastSeen), {
+                  addSuffix: true,
+                })
+              : "N/A"}
+          </div>
+          <p className="text-xs text-muted-foreground">Since last activity</p>
         </CardContent>
       </Card>
     </div>

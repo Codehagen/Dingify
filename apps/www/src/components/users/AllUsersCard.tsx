@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { deleteCustomer } from "@/actions/delete-customer";
 import { ChevronDownIcon, PlusIcon, StarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { CircleIcon, TrashIcon } from "lucide-react";
+import { CircleIcon, Tag, TrashIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@dingify/ui/components/badge";
@@ -101,7 +101,7 @@ export function AllUsersCards({ customerDetails }) {
           <CardContent>
             <div className="flex space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center">
-                <CircleIcon className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
+                <Tag className="mr-1 h-3 w-3 " />
                 {customer.userId}
               </div>
               <div className="flex items-center">

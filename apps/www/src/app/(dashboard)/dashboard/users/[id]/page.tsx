@@ -23,7 +23,6 @@ export default async function UserPage({ params }: { params: { id: string } }) {
 
   try {
     const customerDetails = await getCustomerDetails(customerId);
-    console.log("Customer details:", customerDetails); // Debugging log
 
     if (!customerDetails) {
       return (
@@ -56,7 +55,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
           text="Customer details and events"
         />
         <div>
-          <UserCard />
+          <UserCard customerDetails={customerDetails} />
         </div>
       </DashboardShell>
     );

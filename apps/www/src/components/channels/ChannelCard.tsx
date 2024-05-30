@@ -9,7 +9,8 @@ import {
   StarIcon,
 } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { BellIcon, BellOffIcon, TrashIcon } from "lucide-react";
+import { BellIcon, BellOffIcon, Tag, TrashIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { Badge } from "@dingify/ui/components/badge";
 import { Button } from "@dingify/ui/components/button";
@@ -29,7 +30,6 @@ import {
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
-import { toast } from "sonner";
 
 export function ChannelCard({ channelDetails }) {
   const router = useRouter();
@@ -95,7 +95,7 @@ export function ChannelCard({ channelDetails }) {
           <CardContent>
             <div className="flex space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center">
-                <CircleIcon className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
+                <Tag className="mr-1 h-3 w-3 " />
                 Placeholder
               </div>
               <div className="flex items-center">

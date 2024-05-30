@@ -1,9 +1,9 @@
 import UserCardsSection from "./UserCardsSection";
 
-export default function UserCard({}) {
+export default function UserCard({ customerDetails }) {
   return (
     <div>
-      <UserCardsSection />
+      <UserCardsSection customerDetails={customerDetails} />
     </div>
   );
 }

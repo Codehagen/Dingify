@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { changeCustomerDetails } from "@/actions/change-customer-details";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StarIcon } from "lucide-react";
+import { Pencil, StarIcon, User, UserCog } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -71,7 +71,7 @@ export function EditCustomerSheet({ customer }) {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="secondary" className="px-3 shadow-none">
-          <StarIcon className="mr-1 h-4 w-4" />
+          <Pencil className="mr-1 h-4 w-4" />
           Edit
         </Button>
       </SheetTrigger>
