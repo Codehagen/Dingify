@@ -7,8 +7,8 @@ import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
 export async function createEvent(data) {
-  const user = await getCurrentUser();
-  if (!user) {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
     throw new Error("User not authenticated");
   }
 
@@ -18,9 +18,9 @@ export async function createEvent(data) {
     throw new Error("All fields are required");
   }
 
-  // Ensure that the projectId is the user's ID or obtain it appropriately
+  // Ensure the authenticated user's project exists
   const project = await prisma.project.findFirst({
-    where: { userId: user.id },
+    where: { userId: currentUser.id },
   });
 
   if (!project) {
@@ -42,19 +42,59 @@ export async function createEvent(data) {
     },
   });
 
-  const newEvent = await prisma.event.create({
-    data: {
-      name,
-      userId: user_id,
-      icon,
-      notify,
-      tags: {}, // Provide an empty object or handle this according to your schema
-      channelId: upsertChannel.id,
+  // Check if the customer exists based on user_id and project_id
+  let customer = await prisma.customer.findUnique({
+    where: {
+      userId_projectId: {
+        userId: user_id,
+        projectId: project.id,
+      },
     },
   });
 
-  // Revalidate the path where the event is displayed
-  revalidatePath("/dashboard");
+  // If the customer does not exist, create a new customer
+  if (!customer) {
+    try {
+      customer = await prisma.customer.create({
+        data: {
+          projectId: project.id,
+          userId: user_id,
+          name: "", // Assuming name and email are optional
+          email: "",
+          createdAt: new Date(),
+        },
+      });
+      console.log("New customer created:", customer); // Log the new customer
+    } catch (error) {
+      console.error("Error creating customer:", error);
+      throw error;
+    }
+  } else {
+    console.log("Existing customer found:", customer); // Log the existing customer
+  }
 
-  return { success: true, event: newEvent };
+  // Create the event and associate it with the customer
+  try {
+    const newEvent = await prisma.event.create({
+      data: {
+        name,
+        userId: user_id, // userId here is a plain string
+        icon,
+        notify,
+        tags: {}, // Provide an empty object or handle this according to your schema
+        channelId: upsertChannel.id,
+        customerId: customer.id, // Associate the event with the customer
+      },
+    });
+
+    console.log("New event created:", newEvent); // Log the new event
+
+    // Revalidate the path where the event is displayed
+    revalidatePath("/dashboard");
+
+    return { success: true, event: newEvent };
+  } catch (error) {
+    console.error("Error creating event:", error);
+    throw error;
+  }
 }

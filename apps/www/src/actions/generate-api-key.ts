@@ -38,7 +38,7 @@ export async function generateAndSaveApiKey() {
       `Project and channel created successfully for user ID: ${userId}.`,
     );
 
-    revalidatePath("/dashboard");
+    // revalidatePath("/dashboard");
 
     return {
       success: true,
