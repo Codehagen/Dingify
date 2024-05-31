@@ -1,6 +1,8 @@
 // actions/get-customer-details.ts
 "use server";
 
+import { subDays } from "date-fns";
+
 import { prisma } from "@/lib/db";
 
 export async function getCustomerDetails(customerId: string) {
@@ -12,12 +14,32 @@ export async function getCustomerDetails(customerId: string) {
           orderBy: {
             createdAt: "asc",
           },
+          include: {
+            channel: true,
+          },
         },
       },
     });
 
     if (!customer) {
       throw new Error("Customer not found");
+    }
+
+    const now = new Date();
+    const fourteenDaysAgo = subDays(now, 14);
+
+    // Calculate events in the last 14 days
+    const recentEvents = customer.events.filter(
+      (event) => new Date(event.createdAt) >= fourteenDaysAgo,
+    );
+
+    const eventCountLast14Days = recentEvents.length;
+
+    let userStatus = "Idle User 😴";
+    if (eventCountLast14Days > 10) {
+      userStatus = "Power User 🔥";
+    } else if (eventCountLast14Days >= 1) {
+      userStatus = "Engaged User 👍";
     }
 
     // Calculate the first and last seen dates and most used feature
@@ -40,6 +62,7 @@ export async function getCustomerDetails(customerId: string) {
       firstSeen,
       lastSeen,
       mostUsedFeature,
+      userStatus,
     };
   } catch (error) {
     console.error("Error fetching customer details:", error);
