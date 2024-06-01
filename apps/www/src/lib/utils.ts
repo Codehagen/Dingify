@@ -1,8 +1,9 @@
 import type { ClassValue } from "clsx";
-import { env } from "@/env";
 import { clsx } from "clsx";
 import ms from "ms";
 import { twMerge } from "tailwind-merge";
+
+import { env } from "@/env";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -32,7 +33,7 @@ export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<JSON> {
   const res = await fetch(input, init);
 
@@ -104,4 +105,30 @@ export function getGreeting() {
 
   // Fallback
   return "today";
+}
+
+export async function fetchGithubData() {
+  try {
+    const githubInfoResponse = await fetch(
+      "https://api.github.com/repos/Codehagen/Dingify",
+    );
+    if (!githubInfoResponse.ok) throw new Error("Failed to fetch GitHub info");
+    const data = await githubInfoResponse.json();
+
+    const prsResponse = await fetch(
+      "https://api.github.com/search/issues?q=repo:Codehagen/Dingify+type:pr+is:merged",
+    );
+    if (!prsResponse.ok) throw new Error("Failed to fetch PRs info");
+    const totalPR = await prsResponse.json();
+
+    return {
+      stargazers_count: data.stargazers_count,
+      open_issues: data.open_issues,
+      total_count: totalPR.total_count,
+      forks: data.forks,
+    };
+  } catch (error) {
+    console.error("Error fetching GitHub data:", error);
+    throw error;
+  }
 }
