@@ -24,6 +24,18 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
+
+        /* Custom properties */
+    --navigation-height: 3.5rem;
+    --color-one: #ffbd7a;
+    --color-two: #fe8bbb;
+    --color-three: #9e7aff;
+
+    /* 
+    --color-one: #37ecba;
+    --color-two: #72afd3;
+    --color-three: #ff2e63;
+     */
   }
 
   .dark {

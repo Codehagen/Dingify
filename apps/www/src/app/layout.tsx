@@ -2,14 +2,15 @@ import "../styles/globals.css";
 
 import { Metadata } from "next";
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
+
+import { Toaster } from "@dingify/ui/components/sonner";
+
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 import { Analytics } from "@/components/analytics";
 import { ModalProvider } from "@/components/modal-provider";
 import { Providers } from "@/components/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
-
-import { Toaster } from "@dingify/ui/components/sonner"
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -72,14 +73,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
           fontUrban.variable,
-          fontHeading.variable
+          fontHeading.variable,
         )}
       >
         <Providers attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Analytics />
           <Toaster />
-           <ModalProvider />
+          <ModalProvider />
           <TailwindIndicator />
         </Providers>
       </body>
