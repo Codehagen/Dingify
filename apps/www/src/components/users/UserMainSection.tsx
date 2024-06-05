@@ -63,6 +63,7 @@ import {
 } from "@dingify/ui/components/tooltip";
 
 import { UserChartActivity } from "./UserChartActivity";
+import UserEmailCard from "./UserEmailCard";
 import { UserGridActivity } from "./UserGridActivity";
 import { UserPowerCard } from "./UserPowerCard";
 import UsersDashboardTable from "./UsersDashboardTable";
@@ -118,21 +119,7 @@ export function UserMainSection({ customerDetails }) {
         <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
           <UserPowerCard customerDetails={customerDetails} />
           <UserGridActivity />
-
-          <Card x-chunk="dashboard-07-chunk-5">
-            <CardHeader>
-              <CardTitle>Follow up a customer</CardTitle>
-              <CardDescription>
-                Stay in touch with your customers. Send them an email.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div></div>
-              <Button size="sm" variant="secondary">
-                Send Email
-              </Button>
-            </CardContent>
-          </Card>
+          <UserEmailCard customerDetails={customerDetails} />
         </div>
       </div>
     </div>
