@@ -2,10 +2,10 @@
 // TODO: The tailwind.d.ts declaration file isn't recognized by apps that consume this file
 
 import type { Config } from "tailwindcss";
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette"
-import { fontFamily } from "tailwindcss/defaultTheme";
+import typography from "@tailwindcss/typography";
 import animate from "tailwindcss-animate";
-import typography from "@tailwindcss/typography"
+import { fontFamily } from "tailwindcss/defaultTheme";
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 
 export default {
   content: ["src/**/*.{ts,tsx}"],
@@ -126,6 +126,14 @@ export default {
             opacity: "1",
           },
         },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -138,6 +146,8 @@ export default {
         // Fade in and out
         "fade-in": "fade-in 0.4s",
         "fade-out": "fade-out 0.4s",
+
+        shimmer: "shimmer 8s infinite",
       },
     },
   },
@@ -150,7 +160,7 @@ function addVariablesForColors({ addBase, theme }) {
   // eslint-disable-next-line
   const allColors = flattenColorPalette(theme("colors"));
   const newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
   );
 
   // eslint-disable-next-line
