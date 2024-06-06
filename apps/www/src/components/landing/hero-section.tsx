@@ -6,6 +6,7 @@ import { useInView } from "framer-motion";
 
 import { Button } from "@dingify/ui/components/button";
 
+import { GetStartedButton } from "../buttons/GetStartedButton";
 import { BorderBeam } from "../ui/border-beam";
 import TextShimmer from "../ui/text-shimmer";
 
@@ -32,10 +33,7 @@ export default function HeroSectionNew2() {
         <br className="hidden md:block" /> Monitor potental issues and
         opportunities
       </p>
-      <Button className="translate-y-[-1rem] animate-fade-in gap-1 rounded-lg text-white opacity-0 ease-in-out [--animation-delay:600ms] dark:text-black">
-        <span>Get Started for free </span>
-        <ArrowRightIcon className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
-      </Button>
+      <GetStartedButton />
       <div
         ref={ref}
         className="relative mt-[8rem] animate-fade-up opacity-0 [--animation-delay:400ms] [perspective:2000px] after:absolute after:inset-0 after:z-50 after:[background:linear-gradient(to_top,hsl(var(--background))_30%,transparent)]"

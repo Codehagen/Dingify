@@ -20,9 +20,9 @@ export function BeamSection() {
           </h2>
 
           <p className="mt-6 text-xl leading-8 text-black/80 dark:text-white">
-            Choose an <strong>affordable plan</strong> that&apos;s packed with
-            the best features for engaging your audience, creating customer
-            loyalty, and driving sales.
+            It only takes a <strong>single</strong> HTTP request to get started.
+            Integrate seamlessly with your our SDK and tools to simplify the
+            process.
           </p>
         </div>
       </div>

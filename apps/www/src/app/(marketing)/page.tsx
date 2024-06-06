@@ -14,7 +14,10 @@ import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
 import HeroSection from "@/components/dashboard/herosection";
 import HeroSection2 from "@/components/dashboard/herosection2";
+import CallToActionSection from "@/components/landing/cta-section";
+import EventsSectionLanding from "@/components/landing/events-section-landing";
 import HeroSectionNew2 from "@/components/landing/hero-section";
+import { IntegrationsSectionLanding } from "@/components/landing/Integrations-section-landing";
 import { Icons } from "@/components/shared/icons";
 
 export default async function IndexPage() {
@@ -23,6 +26,10 @@ export default async function IndexPage() {
       <HeroSectionNew2 />
       <SphereMask />
       <BeamSection />
+      <IntegrationsSectionLanding />
+      <EventsSectionLanding />
+      <CallToActionSection />
+      <SphereMask reverse />
 
       <Particles
         className="absolute inset-0 -z-10"
@@ -32,6 +39,7 @@ export default async function IndexPage() {
         staticity={40}
         color={"#ffffff"}
       />
+
       {/* <HeroSection2 /> */}
       {/* <BeamSection /> */}
       {/* <section className="space-y-6 pb-12 pt-16 lg:py-28">
