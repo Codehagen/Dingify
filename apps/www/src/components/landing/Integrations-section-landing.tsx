@@ -20,45 +20,45 @@ const cardImage = [
   },
   {
     id: 2,
+    title: "Emily",
+    link: "#",
+    image: "https://avatar.vercel.sh/emily",
+  },
+  {
+    id: 3,
     title: "Chris",
     link: "#",
     image: "https://avatar.vercel.sh/chris",
   },
   {
-    id: 3,
-    title: "PJ",
+    id: 4,
+    title: "Sophie",
     link: "#",
-    image: "https://avatar.vercel.sh/pj",
+    image: "https://avatar.vercel.sh/sophie",
   },
   {
-    id: 4,
+    id: 5,
     title: "Scott",
     link: "#",
     image: "https://avatar.vercel.sh/scott",
   },
   {
-    id: 5,
-    title: "Yehuda",
-    link: "#",
-    image: "https://avatar.vercel.sh/yehuda",
-  },
-  {
     id: 6,
-    title: "Ezra",
+    title: "Olivia",
     link: "#",
-    image: "https://avatar.vercel.sh/ezra",
+    image: "https://avatar.vercel.sh/olivia",
   },
   {
     id: 7,
-    title: "Ivey",
-    link: "#",
-    image: "https://avatar.vercel.sh/ivey",
-  },
-  {
-    id: 8,
     title: "Evan",
     link: "#",
     image: "https://avatar.vercel.sh/evan",
+  },
+  {
+    id: 8,
+    title: "Grace",
+    link: "#",
+    image: "https://avatar.vercel.sh/grace",
   },
   {
     id: 9,
@@ -92,7 +92,7 @@ export function IntegrationsSectionLanding() {
           Dingify makes it easy to track the journey of your users
         </h2>
         <a
-          href="#"
+          href="/dashboard"
           className="text-base font-normal text-gray-500 underline-offset-4 transition-all hover:underline"
         >
           Get started for free

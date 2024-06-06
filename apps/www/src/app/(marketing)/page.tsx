@@ -14,6 +14,7 @@ import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
 import HeroSection from "@/components/dashboard/herosection";
 import HeroSection2 from "@/components/dashboard/herosection2";
+import BottomSectionLanding from "@/components/landing/bottom-section-landing";
 import CallToActionSection from "@/components/landing/cta-section";
 import EventsSectionLanding from "@/components/landing/events-section-landing";
 import HeroSectionNew2 from "@/components/landing/hero-section";
@@ -30,6 +31,7 @@ export default async function IndexPage() {
       <EventsSectionLanding />
       <CallToActionSection />
       <SphereMask reverse />
+      <BottomSectionLanding />
 
       <Particles
         className="absolute inset-0 -z-10"

@@ -186,7 +186,7 @@ export default function CallToActionSection() {
                 </h1>
                 <p className="mt-2">No credit card required.</p>
                 <Link
-                  href="#"
+                  href="/dashboard"
                   className={cn(
                     buttonVariants({
                       size: "lg",
