@@ -23,6 +23,7 @@ import {
 } from "@dingify/ui/components/dropdown-menu";
 import { Separator } from "@dingify/ui/components/separator";
 
+import { ViewDetailsButton } from "@/components/buttons/ViewDetailsButton";
 import { UserBadge } from "@/components/UserBadge";
 
 export default function EventsDashboardDetails({ event }) {
@@ -64,12 +65,7 @@ export default function EventsDashboardDetails({ event }) {
             </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
-            <Button className="h-8 gap-1" size="sm" variant="outline">
-              <InfoIcon className="h-3.5 w-3.5" />
-              <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                View Details
-              </span>
-            </Button>
+            <ViewDetailsButton event={event} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="h-8 w-8" size="icon" variant="outline">
