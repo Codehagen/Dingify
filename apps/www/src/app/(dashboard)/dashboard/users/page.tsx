@@ -13,7 +13,6 @@ export default async function UsersPage({
   params: { id: string };
 }) {
   const customers = await getAllCustomersForUser();
-  console.log(customers);
 
   return (
     <DashboardShell>

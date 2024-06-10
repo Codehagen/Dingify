@@ -9,6 +9,8 @@ import {
 } from "@dingify/ui/components/card";
 import { Progress } from "@dingify/ui/components/progress";
 
+import { CreateEventButton } from "@/components/buttons/CreatEventButton";
+
 import { EventDashboardDetailsSheet } from "./EventDashboardDetailsSheet";
 
 export default function EventsDashboardCards({ eventStats }) {
@@ -23,8 +25,8 @@ export default function EventsDashboardCards({ eventStats }) {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          {/* <Button>Create New Event</Button> */}
-          <EventDashboardDetailsSheet />
+          {/* <EventDashboardDetailsSheet /> */}
+          <CreateEventButton />
         </CardFooter>
       </Card>
       <Card x-chunk="dashboard-05-chunk-1">
