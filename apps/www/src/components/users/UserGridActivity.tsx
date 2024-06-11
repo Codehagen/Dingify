@@ -70,7 +70,7 @@ export function UserGridActivity({ dings }: { dings: any }) {
       <CardHeader>
         <CardTitle>Activity Calendar</CardTitle>
         <CardDescription>
-          A visualization of user activity throughout the year.
+          A visualization of user activity for the last 3 months.
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">
