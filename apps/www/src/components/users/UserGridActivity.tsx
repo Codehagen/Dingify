@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  endOfMonth,
+  format,
+  parseISO,
+  startOfMonth,
+  subMonths,
+} from "date-fns";
 import ActivityCalendar from "react-activity-calendar";
 
 import {
@@ -10,31 +17,67 @@ import {
   CardTitle,
 } from "@dingify/ui/components/card";
 
+type props = {
+  date: string;
+  count: number;
+  level: number;
+};
+
 // Example data: array of objects with date and count
-const calendarData = [
-  { date: "2023-01-01", count: 2, level: 1 },
-  { date: "2023-01-02", count: 5, level: 2 },
-  { date: "2023-01-03", count: 1, level: 0 },
-  { date: "2023-02-16", count: 1, level: 1 },
 
-  // Add more data points as needed
-  { date: "2023-03-31", count: 3, level: 1 },
-];
+export function UserGridActivity({ dings }: { dings: any }) {
+  const today = new Date();
 
-export function UserGridActivity() {
+  // Create a date 2 months back + last of current month - To fill in blanks
+  const firstDayTwoMonthsAgo = startOfMonth(subMonths(today, 2));
+  const lastDayCurrentMonth = endOfMonth(today);
+
+  const calendarData: any = [
+    { date: format(firstDayTwoMonthsAgo, "yyyy-MM-dd"), count: 0, level: 0 },
+    { date: format(lastDayCurrentMonth, "yyyy-MM-dd"), count: 0, level: 0 },
+  ];
+  dings.map((ding: any) => {
+    const eventData: props = {
+      date: format(ding.createdAt, "yyyy-MM-dd"),
+      count: 1,
+      level: 1,
+    };
+
+    // Check if date already exist in calendarData
+    const existingDate = calendarData.findIndex(
+      (event: any) => event.date === eventData.date,
+    );
+
+    // If date, update the event-count and level
+    if (existingDate !== -1) {
+      calendarData[existingDate].count = calendarData[existingDate].count + 1;
+      // Level 4 is max (dark green)
+      if (calendarData[existingDate].level < 4)
+        calendarData[existingDate].level = calendarData[existingDate].level + 1;
+    } else {
+      calendarData.push(eventData);
+    }
+  });
+
+  // Sort the calendarData by date - Prevents months from being hidden if no activity
+  calendarData.sort((a: any, b: any) => {
+    return parseISO(a.date).getTime() - parseISO(b.date).getTime();
+  });
+
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>
         <CardTitle>Activity Calendar</CardTitle>
         <CardDescription>
-          A visualization of user activity throughout the year.
+          A visualization of user activity for the last 3 months.
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-4">
         <div style={{ height: "auto", width: "100%" }}>
           <ActivityCalendar
             data={calendarData}
-            blockSize={15}
+            blockSize={13}
             blockMargin={5}
             fontSize={14}
             hideTotalCount={false}
