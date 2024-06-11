@@ -69,56 +69,17 @@ import { UserPowerCard } from "./UserPowerCard";
 import UsersDashboardTable from "./UsersDashboardTable";
 
 export function UserMainSection({ customerDetails }) {
-  console.log("Customer details from UserMainSection:", customerDetails); // Debugging log
+  console.log(customerDetails)
   return (
     <div className="">
       <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
         <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
           <UsersDashboardTable customerDetails={customerDetails} />
           <UserChartActivity />
-
-          {/* <Card x-chunk="dashboard-07-chunk-2">
-            <CardHeader>
-              <CardTitle>Product Category</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-6 sm:grid-cols-3">
-                <div className="grid gap-3">
-                  <Label htmlFor="category">Category</Label>
-                  <Select>
-                    <SelectTrigger id="category" aria-label="Select category">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="clothing">Clothing</SelectItem>
-                      <SelectItem value="electronics">Electronics</SelectItem>
-                      <SelectItem value="accessories">Accessories</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="subcategory">Subcategory (optional)</Label>
-                  <Select>
-                    <SelectTrigger
-                      id="subcategory"
-                      aria-label="Select subcategory"
-                    >
-                      <SelectValue placeholder="Select subcategory" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                      <SelectItem value="hoodies">Hoodies</SelectItem>
-                      <SelectItem value="sweatshirts">Sweatshirts</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card> */}
         </div>
         <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
           <UserPowerCard customerDetails={customerDetails} />
-          <UserGridActivity />
+          <UserGridActivity dings={customerDetails.events} />
           <UserEmailCard customerDetails={customerDetails} />
         </div>
       </div>
