@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { updateNotificationSettings } from "@/actions/change-notification-settings";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ExternalLinkIcon } from "lucide-react";
+import { Check, ExternalLinkIcon } from "lucide-react"; // Import Check icon
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -69,27 +69,17 @@ export function NotificationAlert({ initialSettings }) {
   }, [initialSettings, form]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const result = await updateNotificationSettings(data);
-
-    if (result.success) {
-      toast.message(
-        <div className="flex flex-col">
-          <span>Notification Settings Updated.</span>
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        </div>,
-      );
-    } else {
-      toast.message(
-        <div className="flex flex-col">
-          <span>Error updating notification settings.</span>
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{result.error}</code>
-          </pre>
-        </div>,
-      );
-    }
+    toast.promise(updateNotificationSettings(data), {
+      loading: "Updating...",
+      success: (result) => {
+        if (result.success) {
+          return "Notification Settings Updated.";
+        } else {
+          throw new Error(result.error);
+        }
+      },
+      error: (err) => `Error updating notification settings: ${err.message}`,
+    });
   }
 
   return (
@@ -207,7 +197,10 @@ export function NotificationAlert({ initialSettings }) {
 
           <CardFooter className="space-x-2">
             <div className="ml-auto flex space-x-2">
-              <Button variant="secondary">Test Webhook</Button>
+              <Button variant="secondary">
+                Test Webhook
+                <Check className="ml-2 h-4 w-4" />
+              </Button>
               <Button type="submit">Submit</Button>
             </div>
           </CardFooter>
