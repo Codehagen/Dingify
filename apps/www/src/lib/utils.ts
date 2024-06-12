@@ -132,3 +132,43 @@ export async function fetchGithubData() {
     throw error;
   }
 }
+
+export async function sendDiscordNotification(webhookUrl, message) {
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: message,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send Discord notification");
+    }
+  } catch (error) {
+    console.error("Error sending notification to Discord:", error);
+  }
+}
+
+export async function sendSlackNotification(webhookUrl, message) {
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: message,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send Slack notification");
+    }
+  } catch (error) {
+    console.error("Error sending notification to Slack:", error);
+  }
+}

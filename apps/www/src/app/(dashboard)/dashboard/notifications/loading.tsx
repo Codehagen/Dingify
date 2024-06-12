@@ -6,8 +6,8 @@ export default function DashboardSettingsLoading() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Settings"
-        text="Manage account and website settings."
+        heading="Notifications"
+        text="Overview of all your notification channels"
       />
       <div className="grid gap-10">
         <CardSkeleton />

@@ -20,9 +20,9 @@ import { UserNameForm } from "@/components/forms/user-name-form";
 import { NotificationAlert } from "@/components/notifications/NotificationAlert";
 
 export const metadata = {
-  title: "Dingify Settings - Customize Your Experience",
+  title: "Dingify Notifications - Customize Your Alerts",
   description:
-    "Adjust your Dingify account settings for a personalized real-time monitoring experience. Manage language preferences, account details, and more.",
+    "Adjust your Dingify notification settings for a personalized real-time monitoring experience. Manage alert preferences, notification channels, and more.",
 };
 
 export default async function SettingsPage() {
@@ -42,10 +42,6 @@ export default async function SettingsPage() {
         text="Overview of all your notification channels"
       />
       <NotificationAlert initialSettings={settings} />
-
-      <div className="grid gap-10">
-        <UserNameForm user={{ id: user.id, name: user.name || "" }} />
-      </div>
     </DashboardShell>
   );
 }
