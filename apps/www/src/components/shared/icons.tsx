@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  Bell,
   BrainCircuit,
   Check,
   ChevronDown,
@@ -64,6 +65,7 @@ export const Icons = {
   ungroup: Ungroup,
   party: PartyPopper,
   piecart: PieChart,
+  bell: Bell,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
