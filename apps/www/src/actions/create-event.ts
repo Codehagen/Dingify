@@ -5,6 +5,12 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+import { sendDiscordNotification, sendSlackNotification } from "@/lib/utils";
+
+type NotificationDetails = {
+  webhook: string;
+  name: string;
+};
 
 export async function createEvent(data) {
   const currentUser = await getCurrentUser();
@@ -112,6 +118,29 @@ export async function createEvent(data) {
 
     // Revalidate the path where the event is displayed
     revalidatePath("/dashboard");
+
+    // Fetch notification settings for the current user
+    const notificationSettings = await prisma.notificationSetting.findFirst({
+      where: { userId: currentUser.id },
+    });
+
+    if (notificationSettings) {
+      const { type, details } = notificationSettings;
+      const detailsParsed = details as NotificationDetails;
+
+      // Send notification based on the provider type
+      if (type === "DISCORD" && detailsParsed?.webhook) {
+        await sendDiscordNotification(
+          detailsParsed.webhook,
+          `Event created: ${name}`,
+        );
+      } else if (type === "SLACK" && detailsParsed?.webhook) {
+        await sendSlackNotification(
+          detailsParsed.webhook,
+          `Event created: ${name}`,
+        );
+      }
+    }
 
     return { success: true, event: newEvent };
   } catch (error) {
