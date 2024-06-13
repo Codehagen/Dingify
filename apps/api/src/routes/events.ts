@@ -3,7 +3,10 @@ import { Hono } from "hono";
 import { Env } from "../env";
 import { prisma } from "../lib/db";
 import { parsePrismaError } from "../lib/parsePrismaError";
-import { sendDiscordNotification } from "../notifications/discord/sendDiscordNotification";
+import {
+  sendDiscordNotification,
+  sendSlackNotification,
+} from "../notifications/discord/sendDiscordNotification";
 import { EventSchema } from "../validators";
 
 const events = new Hono<{
@@ -143,7 +146,32 @@ events.post("/", async (c) => {
       console.error("Metrics not found for the project");
     }
 
-    await sendDiscordNotification(`New event logged: ${name}`);
+    // Fetch notification settings for the current user
+    const notificationSettings = await prisma(
+      c.env,
+    ).notificationSetting.findFirst({
+      where: { userId: user.id },
+    });
+    console.log("Notification settings:", notificationSettings);
+
+    if (notificationSettings) {
+      const { type, details } = notificationSettings;
+      const detailsParsed = details as { webhook: string };
+
+      if (type === "DISCORD" && detailsParsed?.webhook) {
+        await sendDiscordNotification(
+          detailsParsed.webhook,
+          `Event created: ${name}`,
+        );
+      } else if (type === "SLACK" && detailsParsed?.webhook) {
+        await sendSlackNotification(
+          detailsParsed.webhook,
+          `Event created: ${name}`,
+        );
+      }
+    } else {
+      console.log("No notification settings found for the user.");
+    }
 
     return c.json(
       { ok: true, message: "Event logged!", event: savedEvent },
