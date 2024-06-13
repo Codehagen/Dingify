@@ -87,14 +87,27 @@ export function NotificationAlert({ initialSettings }) {
   async function handleTestWebhook() {
     const data = form.getValues(); // Get current form values
     setIsTesting(true);
-    const result = await testWebhook(data);
-    setIsTesting(false);
 
-    if (result.success) {
-      toast.success("Webhook tested successfully.");
-    } else {
-      toast.error(`Error testing webhook: ${result.error}`);
-    }
+    toast.promise(
+      testWebhook(data)
+        .then((result) => {
+          setIsTesting(false);
+          if (result.success) {
+            return "Webhook is working!";
+          } else {
+            throw new Error(result.error);
+          }
+        })
+        .catch((error) => {
+          setIsTesting(false);
+          throw new Error(`Error testing webhook: ${error.message}`);
+        }),
+      {
+        loading: "Testing webhook...",
+        success: "Webhook is working!",
+        error: (err) => `Error testing webhook: ${err.message}`,
+      },
+    );
   }
 
   return (
