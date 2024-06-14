@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import { deleteEvent } from "@/actions/delete-event";
+import { format } from "date-fns";
 import { File, Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
@@ -61,7 +62,8 @@ export default function EventsDashboardDetails({ event }) {
               </Button>
             </CardTitle>
             <CardDescription>
-              Date: {new Date(event?.createdAt).toLocaleDateString()}
+              Date:{" "}
+              {event?.createdAt ? format(event?.createdAt, "MM/dd/yyyy") : ""}
             </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
