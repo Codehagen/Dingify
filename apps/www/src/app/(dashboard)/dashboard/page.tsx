@@ -9,6 +9,7 @@ import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddChannelButton } from "@/components/buttons/AddChannelButton";
 import { AddProjectButton } from "@/components/buttons/AddProjectButton";
 import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
+import { StartOnbordaButton } from "@/components/buttons/StartOnbordaButton";
 import EventsDashboard from "@/components/dashboard/EventsDashboard";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
@@ -133,6 +134,16 @@ export default async function DashboardPage() {
               You need to generate an API key first
             </EmptyPlaceholder.Description>
             <AddApiKeyButton />
+            <div className="mt-4 space-y-4">
+              <StartOnbordaButton />
+
+              <div
+                id="onborda-step1"
+                className="flex items-center rounded-sm border border-border p-4 px-8"
+              >
+                This is the first step
+              </div>
+            </div>
           </EmptyPlaceholder>
         ) : (
           // Render EventsTable if there are Events
