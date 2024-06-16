@@ -156,6 +156,9 @@ importers:
       nodemailer:
         specifier: ^6.9.7
         version: 6.9.13
+      onborda:
+        specifier: ^1.2.2
+        version: 1.2.2(framer-motion@11.2.10)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)
       openai:
         specifier: ^4.16.1
         version: 4.48.1
@@ -2019,6 +2022,7 @@ packages:
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
       debug: 4.3.5
@@ -2033,6 +2037,7 @@ packages:
 
   /@humanwhocodes/object-schema@2.0.3:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
     dev: false
 
   /@humanwhocodes/retry@0.3.0:
@@ -10010,6 +10015,20 @@ packages:
   /oidc-token-hash@5.0.3:
     resolution: {integrity: sha512-IF4PcGgzAr6XXSff26Sk/+P4KZFJVuHAJZj3wgO3vX2bMdNVp/QXTP3P7CEm9V1IdG8lDLY3HhiqpsE/nOwpPw==}
     engines: {node: ^10.13.0 || >=12.0.0}
+    dev: false
+
+  /onborda@1.2.2(framer-motion@11.2.10)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-0TMg1d/i13jB0/1OQR0UCe9jqYBTt+9FYUz2ec8aEKDncPGC6y0hlfhrWkfrw/eDrtfPby+XH4gVCiqL2mDJ/Q==}
+    peerDependencies:
+      framer-motion: '>=11'
+      next: '>=13'
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      framer-motion: 11.2.10(react-dom@18.2.0)(react@18.2.0)
+      next: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /once@1.4.0:
