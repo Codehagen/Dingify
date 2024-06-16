@@ -32,7 +32,9 @@ export function Providers({ children, ...props }: ThemeProviderProps) {
         <BalancerProvider>
           <TooltipProvider delayDuration={0}>
             <OnbordaProvider>
-              <Onborda steps={steps}>{children}</Onborda>
+              <Onborda steps={steps} showOnborda={true}>
+                {children}
+              </Onborda>
             </OnbordaProvider>
           </TooltipProvider>
         </BalancerProvider>
