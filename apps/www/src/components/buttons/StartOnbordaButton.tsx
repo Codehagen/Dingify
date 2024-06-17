@@ -12,8 +12,8 @@ export function StartOnbordaButton() {
   };
 
   return (
-    <Button onClick={handleStartOnborda} variant="outline" size="lg">
-      Start Onborda 🚀
+    <Button onClick={handleStartOnborda} variant="outline">
+      Give me a tour
     </Button>
   );
 }

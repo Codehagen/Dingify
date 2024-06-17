@@ -121,6 +121,7 @@ export function CreateEventButton() {
   return (
     <>
       <Button
+        id="onborda-step2"
         variant="default"
         onClick={() => setIsOpen(true)}
         disabled={isLoading}
@@ -149,6 +150,7 @@ export function CreateEventButton() {
           <form onSubmit={handleButtonClick} className="space-y-4">
             <DialogFooter>
               <Button
+                id="onborda-step3"
                 type="submit"
                 disabled={isLoading}
                 className="w-full sm:w-auto"

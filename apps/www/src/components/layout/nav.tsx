@@ -49,6 +49,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
               <>
                 <Separator key={`separator-${item.href}`} />
                 <div
+                  id="onborda-step1"
                   className={cn(
                     "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
                     "text-foreground/60",

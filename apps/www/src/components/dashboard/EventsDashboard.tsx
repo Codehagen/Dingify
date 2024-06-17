@@ -6,6 +6,7 @@ import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 import { DocsButton } from "../buttons/DocsButton";
+import { StartOnbordaButton } from "../buttons/StartOnbordaButton";
 import { EventDashboardDetailsSheet } from "./EventsDashboardComponents/EventDashboardDetailsSheet";
 import EventsDashboardCards from "./EventsDashboardComponents/EventsDashboardCards";
 import EventsDashboardDetails from "./EventsDashboardComponents/EventsDashboardDetails";
@@ -21,6 +22,9 @@ export default function EventsDashboard({ events, eventStats }) {
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <EventsDashboardCards eventStats={eventStats} />
+          <div className="mt-4 space-y-4">
+            <StartOnbordaButton />
+          </div>
         </div>
         {events.length > 0 ? (
           <EventsDashboardTable
