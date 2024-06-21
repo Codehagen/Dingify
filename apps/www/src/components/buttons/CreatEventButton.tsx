@@ -22,6 +22,7 @@ import {
 } from "@dingify/ui/components/dialog";
 
 import { Confetti } from "../ui/confetti";
+import { CheckIcon } from "lucide-react";
 
 SyntaxHighlighter.registerLanguage("json", json);
 
@@ -55,7 +56,7 @@ const handleClick = () => {
 
 export function CreateEventButton() {
   const [isLoading, setIsLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [apiKey, setApiKey] = useState("");
 
@@ -97,7 +98,7 @@ export function CreateEventButton() {
   };
 
   const handleCopy = () => {
-    setCopied(true);
+    setHasCopied(true);
     toast.success("cURL command copied to clipboard.");
   };
 
@@ -142,7 +143,11 @@ export function CreateEventButton() {
             </SyntaxHighlighter>
             <CopyToClipboard text={curlCommand} onCopy={handleCopy}>
               <Button variant="outline" className="absolute right-2 top-2">
-                <CopyIcon className="h-4 w-4" />
+                {hasCopied ? (
+                  <CheckIcon className="h-4 w-4" />
+                ) : (
+                  <CopyIcon className="h-4 w-4" />
+                )}
               </Button>
             </CopyToClipboard>
           </div>
