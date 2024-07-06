@@ -15,26 +15,26 @@ import { useStepper } from "@dingify/ui/components/stepper/use-stepper";
 
 import { cn } from "@/lib/utils";
 
-
 // should get the values, for now just handcoded.!
 const exploreConfig = [
   {
-    title: "Add Domain",
-    description: "Verify and send emails from your own custom domains",
-    buttonText: "Add Domain",
-    href: "#",
+    title: "Read Docs",
+    description:
+      "Read the documentation to learn more about Dingify's features",
+    buttonText: "Docs",
+    href: "https://docs.dingify.io/introduction",
   },
   {
-    title: "Add Domain",
-    description: "Verify and send emails from your own custom domains",
-    buttonText: "Add Domain",
-    href: "#",
+    title: "Dashboard",
+    description: "View and manage your events and more from the dashboard",
+    buttonText: "Dashboard",
+    href: "https://www.dingify.io/dashboard",
   },
   {
-    title: "Add Domain",
-    description: "Verify and send emails from your own custom domains",
-    buttonText: "Add Domain",
-    href: "#",
+    title: "Add new channels",
+    description: "Add new channels to your Dingify account",
+    buttonText: "Add channel",
+    href: "https://www.dingify.io/dashboard",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function ExploreMore() {
                 <Separator className="my-2" />
                 <Button
                   onClick={() => router.push(item.href)}
-                  className="self-start"
+                  className="mt-2 self-start"
                   disabled={activeStep !== 3}
                 >
                   {item.buttonText}
